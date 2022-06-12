@@ -59,17 +59,17 @@ public class MainFragment extends GuidedStepSupportFragment {
             case 1:
                 Log.i(TAG, "escolhi a opção " + getString(R.string.news_slide_mode));
 
-                List<Movie> list = MovieList.setupMovies();
-                Movie movie = new Movie();
-                movie.setTitle(list.get(0).getTitle());
-                movie.setDescription(list.get(0).getDescription());
-                movie.setStudio(list.get(0).getStudio());
-                movie.setVideoUrl(list.get(0).getVideoUrl());
-                movie.setCardImageUrl(list.get(0).getCardImageUrl());
-                movie.setBackgroundImageUrl(list.get(0).getBackgroundImageUrl());
+                List<News> list = NewsList.setupNews();
+                News news = new News();
+                news.setTitle(list.get(0).getTitle());
+                news.setDescription(list.get(0).getDescription());
+                news.setStudio(list.get(0).getStudio());
+                news.setVideoUrl(list.get(0).getVideoUrl());
+                news.setCardImageUrl(list.get(0).getCardImageUrl());
+                news.setBackgroundImageUrl(list.get(0).getBackgroundImageUrl());
 
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.MOVIE, movie);
+                intent.putExtra(DetailsActivity.NEWS, news);
                 startActivity(intent);
                 break;
             case 2:

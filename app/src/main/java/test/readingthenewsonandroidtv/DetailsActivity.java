@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 public class DetailsActivity extends FragmentActivity {
     public static final String SHARED_ELEMENT_NAME = "hero";
     public static final String MOVIE = "Movie";
+    public static final String NEWS = "News";
 
     /**
      * Called when the activity is first created.
@@ -20,7 +21,7 @@ public class DetailsActivity extends FragmentActivity {
         setContentView(R.layout.activity_details);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.details_fragment, new VideoDetailsFragment())
+                    .replace(R.id.details_fragment, new NewsDetailsFragment())
                     .commitNow();
         }
     }
