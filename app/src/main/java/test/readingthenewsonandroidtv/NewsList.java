@@ -17,30 +17,33 @@ public final class NewsList {
     public static List<News> setupNews() {
         list = new ArrayList<>();
         String title[] = {
+                "Síndromes gripais pressionam hospitais de Porto Alegre",
                 "Notícia número 1",
-                "Google Demo Slam_ 20ft Search",
-                "Introducing Google Nose"
         };
 
-        String description = "Texto de notícias número 1. "
+        String description[] = {
+                "Mais de 430 pacientes aguardavam internações em Porto Alegre nesta terça-feira, em um cenário de emergências e hospitais da Capital superlotados. A situação, que compromete também as consultas eletivas ou de menor gravidade, é causada em especial por síndromes gripais, segundo o diretor Atenção Hospitalar e Urgências da SMS, Francisco Isaías. \n" +
+                "\n" +
+                "O quadro se repete na pediatria, porém outro fator que contribui para a superlotação é a falta de vacinação, segundo a chefe do serviço de emergência do Hospital de Clínicas, Patrícia Lago. “É algo que nos preocupa muito”, afirmou ela à RBSTV citando que os casos de pneumonia pneumocócica, que voltaram a afetar crianças da Capital. “Existe um atraso vacinal importante.” \n" +
+                "\n" +
+                "Segundo ela, a rede de atendimento às crianças ainda sente o reflexo do fechamento do setor materno-infantil do Hospital São Lucas, da PUCRS, dois anos atrás. Neste mês, a Prefeitura abriu 111 leitos pediátricos e informou à reportagem da RBS que agora o foco está concentrado em vagas para adultos.",
+                "Texto de notícias número 1. "
                 + "Donec tristique, orci sed semper lacinia, quam erat rhoncus massa, non congue tellus est "
                 + "facilisis mattis. Ut aliquet luctus lacus. Phasellus nec commodo erat. Praesent tempus id "
-                + "lectus ac scelerisque. Maecenas pretium cursus lectus id volutpat.";
+                + "lectus ac scelerisque. Maecenas pretium cursus lectus id volutpat."
+        };
         String studio[] = {
-                "Jornal do Comércio", "Studio One", "Studio Two", "Studio Three", "Studio Four"
+                "Matinal Jornalismo", "Studio One", "Studio Two", "Studio Three", "Studio Four"
         };
         String videoUrl[] = {
                 "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/Zeitgeist/Zeitgeist%202010_%20Year%20in%20Review.mp4",
-                "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/Demo%20Slam/Google%20Demo%20Slam_%2020ft%20Search.mp4",
                 "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Nose.mp4"
         };
         String bgImageUrl[] = {
-                "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/Zeitgeist/Zeitgeist%202010_%20Year%20in%20Review/bg.jpg",
                 "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/Demo%20Slam/Google%20Demo%20Slam_%2020ft%20Search/bg.jpg",
                 "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Nose/bg.jpg",
         };
         String cardImageUrl[] = {
-                "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/Zeitgeist/Zeitgeist%202010_%20Year%20in%20Review/card.jpg",
                 "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole/card.jpg",
                 "https://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Nose/card.jpg"
         };
@@ -49,7 +52,7 @@ public final class NewsList {
             list.add(
                     buildNews(
                             title[index],
-                            description,
+                            description[index],
                             studio[index],
                             videoUrl[index],
                             cardImageUrl[index],

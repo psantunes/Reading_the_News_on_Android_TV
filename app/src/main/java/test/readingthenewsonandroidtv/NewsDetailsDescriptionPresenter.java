@@ -1,8 +1,6 @@
 package test.readingthenewsonandroidtv;
 
-import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
-
-public class NewsDetailsDescriptionPresenter extends AbstractDetailsDescriptionPresenter {
+public class NewsDetailsDescriptionPresenter extends CustomAbstractDetailsDescriptionPresenter {
 
     @Override
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
@@ -14,4 +12,6 @@ public class NewsDetailsDescriptionPresenter extends AbstractDetailsDescriptionP
             viewHolder.getBody().setText(news.getDescription());
         }
     }
+
+
 }
