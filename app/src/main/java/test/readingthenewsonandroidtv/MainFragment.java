@@ -26,7 +26,7 @@ public class MainFragment extends GuidedStepSupportFragment {
     public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         String title = getString(R.string.app_name);
         String description = getString(R.string.app_name_desc);
-        Drawable icon = getActivity().getDrawable(R.drawable.newspapgit er1
+        Drawable icon = getActivity().getDrawable(R.drawable.newspaper1
         );
         return new GuidanceStylist.Guidance(title, description, null, icon);
     }
