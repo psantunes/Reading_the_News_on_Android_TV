@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "test.readingthenewsonandroidtv"
-        minSdk 26
+        minSdk 25
         targetSdk 32
         versionCode 1
         versionName "1.0"
