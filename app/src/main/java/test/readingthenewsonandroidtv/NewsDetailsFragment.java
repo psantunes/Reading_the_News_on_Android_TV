@@ -3,9 +3,11 @@ package test.readingthenewsonandroidtv;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,9 +40,10 @@ import com.bumptech.glide.request.transition.Transition;
 public class NewsDetailsFragment extends DetailsSupportFragment {
     private static final String TAG = "NewsDetailsFragment";
 
-    private static final int ACTION_WATCH_TRAILER = 1;
-    private static final int ACTION_RENT = 2;
-    private static final int ACTION_BUY = 3;
+    private static final int HOME = 1;
+    private static final int ADD_FAVORITE = 2;
+    private static final int EXTERNAL_LINK = 3;
+    private static final int NEXT = 4;
 
     private static final int DETAIL_THUMB_WIDTH = 274;
     private static final int DETAIL_THUMB_HEIGHT = 274;
@@ -117,19 +120,20 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
 
         actionAdapter.add(
                 new Action(
-                        ACTION_WATCH_TRAILER,
-                        getResources().getString(R.string.watch_trailer_1),
-                        getResources().getString(R.string.watch_trailer_2)));
+                        HOME,
+                        getResources().getString(R.string.back_1)));
         actionAdapter.add(
                 new Action(
-                        ACTION_RENT,
-                        getResources().getString(R.string.rent_1),
-                        getResources().getString(R.string.rent_2)));
+                        ADD_FAVORITE,
+                        getResources().getString(R.string.favorite_1)));
         actionAdapter.add(
                 new Action(
-                        ACTION_BUY,
-                        getResources().getString(R.string.buy_1),
-                        getResources().getString(R.string.buy_2)));
+                        EXTERNAL_LINK,
+                        getResources().getString(R.string.external_link)));
+        actionAdapter.add(
+                new Action(
+                        NEXT,
+                        getResources().getString(R.string.next_1)));
         row.setActionsAdapter(actionAdapter);
 
         mAdapter.add(row);
@@ -137,8 +141,8 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
 
     private void setupDetailsOverviewRowPresenter() {
         // Set detail background.
-        FullWidthDetailsOverviewRowPresenter detailsPresenter =
-                new FullWidthDetailsOverviewRowPresenter(new NewsDetailsDescriptionPresenter());
+        CustomFullWidthDetailsOverviewRowPresenter detailsPresenter =
+                new CustomFullWidthDetailsOverviewRowPresenter(new NewsDetailsDescriptionPresenter());
         detailsPresenter.setBackgroundColor(
                 ContextCompat.getColor(getContext(), R.color.selected_background));
 
@@ -153,9 +157,12 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
-                if (action.getId() == ACTION_WATCH_TRAILER) {
+                if (action.getId() == EXTERNAL_LINK) {
                     Intent intent = new Intent(getActivity(), PlaybackActivity.class);
                     intent.putExtra(DetailsActivity.NEWS, mSelectedNews);
+                    startActivity(intent);
+                } else if (action.getId() == HOME) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
