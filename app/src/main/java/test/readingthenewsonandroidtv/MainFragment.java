@@ -13,18 +13,20 @@ import java.util.List;
 
 public class MainFragment extends GuidedStepSupportFragment {
     private static final String TAG = "MainFragment";
+    public static List<News> newsList = NewsList.setupNews();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
     public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         String title = getString(R.string.app_name);
         String description = getString(R.string.app_name_desc);
-        Drawable icon = getActivity().getDrawable(R.drawable.newspaper1
+        Drawable icon = getActivity().getDrawable(R.drawable.newspapgit er1
         );
         return new GuidanceStylist.Guidance(title, description, null, icon);
     }
@@ -59,17 +61,8 @@ public class MainFragment extends GuidedStepSupportFragment {
             case 1:
                 Log.i(TAG, "escolhi a opção " + getString(R.string.news_slide_mode));
 
-                List<News> list = NewsList.setupNews();
-                News news = new News();
-                news.setTitle(list.get(0).getTitle());
-                news.setDescription(list.get(0).getDescription());
-                news.setStudio(list.get(0).getStudio());
-                news.setVideoUrl(list.get(0).getVideoUrl());
-                news.setCardImageUrl(list.get(0).getCardImageUrl());
-                news.setBackgroundImageUrl(list.get(0).getBackgroundImageUrl());
-
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.NEWS, news);
+                intent.putExtra(DetailsActivity.NEWS, newsList.get(0));
                 startActivity(intent);
                 break;
             case 2:
@@ -84,4 +77,9 @@ public class MainFragment extends GuidedStepSupportFragment {
 
         }
     }
+
+    public static List<News> getNews() {
+        return newsList;
+    }
+
 }

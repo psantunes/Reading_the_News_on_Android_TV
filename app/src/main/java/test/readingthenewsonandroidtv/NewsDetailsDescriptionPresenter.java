@@ -5,11 +5,13 @@ public class NewsDetailsDescriptionPresenter extends CustomAbstractDetailsDescri
     @Override
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
         News news = (News) item;
+        String text;
 
         if (news != null) {
             viewHolder.getTitle().setText(news.getTitle());
-            viewHolder.getSubtitle().setText(news.getStudio());
-            viewHolder.getBody().setText(news.getDescription());
+            viewHolder.getSubtitle().setText(news.getSource());
+            text = news.getArticle() + "\n\n" + news.getPhotoCredit();
+            viewHolder.getBody().setText(text);
         }
     }
 
