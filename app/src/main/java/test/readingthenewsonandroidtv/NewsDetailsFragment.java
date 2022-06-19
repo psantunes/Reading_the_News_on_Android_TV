@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -33,6 +34,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.util.List;
+
 /*
  * LeanbackDetailsFragment extends DetailsFragment, a Wrapper fragment for leanback details screens.
  * It shows a detailed view of video and its meta plus related videos.
@@ -45,8 +48,8 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private static final int EXTERNAL_LINK = 3;
     private static final int NEXT = 4;
 
-    private static final int DETAIL_THUMB_WIDTH = 274;
-    private static final int DETAIL_THUMB_HEIGHT = 274;
+    private static final int DETAIL_THUMB_WIDTH = 600;
+    private static final int DETAIL_THUMB_HEIGHT = 600;
 
     private News mSelectedNews;
 
@@ -54,6 +57,8 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private ClassPresenterSelector mPresenterSelector;
 
     private DetailsSupportFragmentBackgroundController mDetailsBackground;
+
+    private final List<News> newsList = MainFragment.getNews();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private void setupDetailsOverviewRow() {
         Log.d(TAG, "doInBackground: " + mSelectedNews.toString());
         final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedNews);
+
         row.setImageDrawable(
                 ContextCompat.getDrawable(getContext(), R.drawable.default_background));
         int width = convertDpToPixel(getActivity().getApplicationContext(), DETAIL_THUMB_WIDTH);
@@ -130,19 +136,23 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                 new Action(
                         EXTERNAL_LINK,
                         getResources().getString(R.string.external_link)));
-        actionAdapter.add(
-                new Action(
-                        NEXT,
-                        getResources().getString(R.string.next_1)));
-        row.setActionsAdapter(actionAdapter);
 
+        // dont show if is the last news
+        if (!checkIfItLast()) {
+            actionAdapter.add(
+                    new Action(
+                            NEXT,
+                            getResources().getString(R.string.next_1)));
+        }
+
+        row.setActionsAdapter(actionAdapter);
         mAdapter.add(row);
     }
 
     private void setupDetailsOverviewRowPresenter() {
         // Set detail background.
-        CustomFullWidthDetailsOverviewRowPresenter detailsPresenter =
-                new CustomFullWidthDetailsOverviewRowPresenter(new NewsDetailsDescriptionPresenter());
+        FullWidthDetailsOverviewRowPresenter detailsPresenter =
+                new FullWidthDetailsOverviewRowPresenter(new NewsDetailsDescriptionPresenter());
         detailsPresenter.setBackgroundColor(
                 ContextCompat.getColor(getContext(), R.color.selected_background));
 
@@ -158,11 +168,16 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             @Override
             public void onActionClicked(Action action) {
                 if (action.getId() == EXTERNAL_LINK) {
-                    Intent intent = new Intent(getActivity(), PlaybackActivity.class);
-                    intent.putExtra(DetailsActivity.NEWS, mSelectedNews);
+                    Uri webpage = Uri.parse(mSelectedNews.getLink());
+                    System.out.println("webpage: " + webpage);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                     startActivity(intent);
                 } else if (action.getId() == HOME) {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                } else if (action.getId() == NEXT) {
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.NEWS, newsList.get(getNextNews()));
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
@@ -199,5 +214,27 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                 getActivity().startActivity(intent, bundle);
             }
         }
+    }
+
+    private int getNextNews() {
+        int count = 0;
+        for (News news : newsList) {
+            if (news.getId() == mSelectedNews.getId()) {
+                count = newsList.indexOf(news);
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private boolean checkIfItLast() {
+        int pos = 0;
+        for (News news : newsList) {
+            if (news.getId() == mSelectedNews.getId()) {
+                pos = newsList.indexOf(news);
+                break;
+            }
+        }
+        return (pos == (newsList.size() - 1));
     }
 }
