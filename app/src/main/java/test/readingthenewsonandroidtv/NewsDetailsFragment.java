@@ -1,5 +1,6 @@
 package test.readingthenewsonandroidtv;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,8 +34,18 @@ import androidx.leanback.widget.RowPresenter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
+
+import test.readingthenewsonandroidtv.model.Favorite;
 
 /*
  * LeanbackDetailsFragment extends DetailsFragment, a Wrapper fragment for leanback details screens.
@@ -168,13 +179,33 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             @Override
             public void onActionClicked(Action action) {
                 if (action.getId() == EXTERNAL_LINK) {
+                    try {
                     Uri webpage = Uri.parse(mSelectedNews.getLink());
-                    System.out.println("webpage: " + webpage);
                     Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                     startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getActivity(), "Para ler a notícia, você precisa ter um navegador instalado", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (action.getId() == HOME) {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
+                } else if (action.getId() == ADD_FAVORITE) {
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    Favorite favorite = new Favorite(mSelectedNews.getId(), uid);
+                    DatabaseReference favorites = FirebaseDatabase.getInstance().getReference().child("favorites");
+                    favorites.push().setValue(favorite).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getActivity(),
+                                    "Notícia gravada com sucesso",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), "Erro ao gravar a notícia", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else if (action.getId() == NEXT) {
                     Intent intent = new Intent(getActivity(), DetailsActivity.class);
                     intent.putExtra(DetailsActivity.NEWS, newsList.get(getNextNews()));
