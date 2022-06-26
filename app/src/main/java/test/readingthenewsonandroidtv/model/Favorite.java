@@ -3,19 +3,20 @@ package test.readingthenewsonandroidtv.model;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Favorite {
-    private long id;
+    private int id;
     private String user;
 
-    public Favorite(long id, String user) {
+    public Favorite() { }
+    public Favorite(int id, String user) {
         this.id = id;
         this.user = user;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

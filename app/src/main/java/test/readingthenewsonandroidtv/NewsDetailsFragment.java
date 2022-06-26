@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,8 +36,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -67,16 +64,16 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
 
-    private DetailsSupportFragmentBackgroundController mDetailsBackground;
+    private CustomDetailsSupportFragmentBackgroundController mDetailsBackground;
 
-    private final List<News> newsList = MainFragment.getNews();
+    private final List<News> newsList = NewsList.getNewsList();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate DetailsFragment");
         super.onCreate(savedInstanceState);
 
-        mDetailsBackground = new DetailsSupportFragmentBackgroundController(this);
+        mDetailsBackground = new CustomDetailsSupportFragmentBackgroundController(this);
 
         mSelectedNews =
                 (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
@@ -87,7 +84,6 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
             initializeBackground(mSelectedNews);
-            setOnItemViewClickedListener(new ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
@@ -95,12 +91,13 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     }
 
     private void initializeBackground(News data) {
+        mDetailsBackground.setParallaxDrawableMaxOffset(10);
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.default_background)
-                .load(data.getBackgroundImageUrl())
+                .load(data.getBgImageUrl())
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap bitmap,
@@ -221,30 +218,6 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private int convertDpToPixel(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
-    }
-
-    private final class ItemViewClickedListener implements OnItemViewClickedListener {
-        @Override
-        public void onItemClicked(
-                Presenter.ViewHolder itemViewHolder,
-                Object item,
-                RowPresenter.ViewHolder rowViewHolder,
-                Row row) {
-
-            if (item instanceof Movie) {
-                Log.d(TAG, "Item: " + item.toString());
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(getResources().getString(R.string.movie), mSelectedNews);
-
-                Bundle bundle =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                getActivity(),
-                                ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                                DetailsActivity.SHARED_ELEMENT_NAME)
-                                .toBundle();
-                getActivity().startActivity(intent, bundle);
-            }
-        }
     }
 
     private int getNextNews() {

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class News implements Serializable {
     static final long serialVersionUID = 727566175075960653L;
-    private long id;
+    private int id;
     private String title;
     private String article;
     private String bgImageUrl;
@@ -15,15 +15,16 @@ public class News implements Serializable {
     private String source;
     private String link;
     private String photoCredit;
+    private String publishedAt;
 
     public News() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -51,11 +52,11 @@ public class News implements Serializable {
         this.source = source;
     }
 
-    public String getBackgroundImageUrl() {
+    public String getBgImageUrl() {
         return bgImageUrl;
     }
 
-    public void setBackgroundImageUrl(String bgImageUrl) {
+    public void setBgImageUrl(String bgImageUrl) {
         this.bgImageUrl = bgImageUrl;
     }
 
@@ -74,6 +75,14 @@ public class News implements Serializable {
     public String getPhotoCredit() { return photoCredit; }
 
     public void setPhotoCredit(String photoCredit) { this.photoCredit = photoCredit; }
+
+    public String getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
     @Override
     public String toString() {

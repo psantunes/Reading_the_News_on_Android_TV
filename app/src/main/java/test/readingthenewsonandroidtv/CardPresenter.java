@@ -18,8 +18,8 @@ import com.bumptech.glide.Glide;
 public class CardPresenter extends Presenter {
     private static final String TAG = "CardPresenter";
 
-    private static final int CARD_WIDTH = 313;
-    private static final int CARD_HEIGHT = 176;
+    private static final int CARD_WIDTH = 320;
+    private static final int CARD_HEIGHT = 180;
     private static int sSelectedBackgroundColor;
     private static int sDefaultBackgroundColor;
     private Drawable mDefaultCardImage;
@@ -64,16 +64,16 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        Movie movie = (Movie) item;
+        News news = (News) item;
         ImageCardView cardView = (ImageCardView) viewHolder.view;
 
         Log.d(TAG, "onBindViewHolder");
-        if (movie.getCardImageUrl() != null) {
-            cardView.setTitleText(movie.getTitle());
-            cardView.setContentText(movie.getStudio());
+        if (news.getCardImageUrl() != null) {
+            cardView.setTitleText(news.getTitle());
+            cardView.setContentText(news.getPublishedAt());
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
             Glide.with(viewHolder.view.getContext())
-                    .load(movie.getCardImageUrl())
+                    .load(news.getCardImageUrl())
                     .centerCrop()
                     .error(mDefaultCardImage)
                     .into(cardView.getMainImageView());

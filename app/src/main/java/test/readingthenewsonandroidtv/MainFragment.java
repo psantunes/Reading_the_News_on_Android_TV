@@ -9,13 +9,11 @@ import androidx.leanback.widget.GuidedAction;
 
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.List;
 
 public class MainFragment extends GuidedStepSupportFragment {
     private static final String TAG = "MainFragment";
-    public static List<News> newsList = NewsList.setupNews();
+    public static List<News> newsList = NewsList.getNewsList();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -69,6 +67,8 @@ public class MainFragment extends GuidedStepSupportFragment {
                 break;
             case 2:
                 Log.i(TAG, "escolhi a opção " + getString(R.string.favorites));
+                Intent intent2 = new Intent(getActivity(), FavoriteActivity.class);
+                startActivity(intent2);
                 break;
             case 3:
                 Log.w(TAG, "escolhi a opção " + getString(R.string.about_us));
@@ -79,9 +79,4 @@ public class MainFragment extends GuidedStepSupportFragment {
 
         }
     }
-
-    public static List<News> getNews() {
-        return newsList;
-    }
-
 }
