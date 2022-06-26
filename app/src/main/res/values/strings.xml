@@ -6,7 +6,12 @@
     <string name="news_slide_mode_desc">Leia as notícias que selecionamos para você hoje</string>
     <string name="favorites">Favoritos</string>
     <string name="favorites_desc">Releia as notícias que você salvou</string>
-    <string name="about_us">Quem Somos</string>
+    <string name="logout">Sair</string>
+
+    <string name="back_1">Página Inicial</string>
+    <string name="favorite_1">Favoritos</string>
+    <string name="external_link">Ler notícia</string>
+    <string name="next_1">Próxima >></string>
 
     <string name="related_movies">Related Videos</string>
     <string name="grid_view">Grid View</string>
@@ -18,11 +23,6 @@
     <string name="rent_2">From $1.99</string>
     <string name="buy_1">Buy and Own</string>
     <string name="buy_2">AT $9.99</string>
-
-    <string name="back_1">Página Inicial</string>
-    <string name="favorite_1">Favoritos</string>
-    <string name="external_link">Ler notícia</string>
-    <string name="next_1">Próxima >></string>
 
     <string name="movie">Movie</string>
 

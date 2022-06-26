@@ -9,6 +9,8 @@ import androidx.leanback.widget.GuidedAction;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 public class MainFragment extends GuidedStepSupportFragment {
@@ -49,7 +51,7 @@ public class MainFragment extends GuidedStepSupportFragment {
         actions.add(action);
         action = new GuidedAction.Builder(getActivity())
                 .id(3)
-                .title(getString(R.string.about_us))
+                .title(getString(R.string.logout))
                 .editable(false)
                 .build();
         actions.add(action);
@@ -71,7 +73,9 @@ public class MainFragment extends GuidedStepSupportFragment {
                 startActivity(intent2);
                 break;
             case 3:
-                Log.w(TAG, "escolhi a opção " + getString(R.string.about_us));
+                Log.w(TAG, "escolhi a opção " + getString(R.string.logout));
+                // FirebaseAuth.getInstance().signOut(); keep the session in Firebase
+                getActivity().finishAndRemoveTask();
                 break;
             default:
                 Log.w(TAG, "nada foi escolhido");
