@@ -8,12 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.leanback.app.DetailsSupportFragment;
 import androidx.leanback.app.DetailsSupportFragmentBackgroundController;
@@ -23,22 +21,20 @@ import androidx.leanback.widget.ClassPresenterSelector;
 import androidx.leanback.widget.DetailsOverviewRow;
 import androidx.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import androidx.leanback.widget.FullWidthDetailsOverviewSharedElementHelper;
-import androidx.leanback.widget.ImageCardView;
 import androidx.leanback.widget.OnActionClickedListener;
-import androidx.leanback.widget.OnItemViewClickedListener;
-import androidx.leanback.widget.Presenter;
-import androidx.leanback.widget.Row;
-import androidx.leanback.widget.RowPresenter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -55,6 +51,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private static final int ADD_FAVORITE = 2;
     private static final int EXTERNAL_LINK = 3;
     private static final int NEXT = 4;
+    private static final int REMOVE_FAVORITE = 5;
 
     private static final int DETAIL_THUMB_WIDTH = 600;
     private static final int DETAIL_THUMB_HEIGHT = 600;
@@ -64,23 +61,29 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
 
-    private CustomDetailsSupportFragmentBackgroundController mDetailsBackground;
+    private DetailsSupportFragmentBackgroundController mDetailsBackground;
 
     private final List<News> newsList = NewsList.getNewsList();
+    private Boolean isFavorite;
+    private String keepFirebaseFavoriteKey;
+    private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate DetailsFragment");
         super.onCreate(savedInstanceState);
 
-        mDetailsBackground = new CustomDetailsSupportFragmentBackgroundController(this);
+
+        mDetailsBackground = new DetailsSupportFragmentBackgroundController(this);
 
         mSelectedNews =
                 (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
         if (mSelectedNews != null) {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
-            setupDetailsOverviewRow();
+
+            verifyFavorites();
+            // function setupDetailsOverviewRow() is called inside verify favorites
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
             initializeBackground(mSelectedNews);
@@ -108,7 +111,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                 });
     }
 
-    private void setupDetailsOverviewRow() {
+    private void setupDetailsOverviewRow(Boolean isFavorite) {
         Log.d(TAG, "doInBackground: " + mSelectedNews.toString());
         final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedNews);
 
@@ -136,10 +139,19 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                 new Action(
                         HOME,
                         getResources().getString(R.string.back_1)));
-        actionAdapter.add(
-                new Action(
-                        ADD_FAVORITE,
-                        getResources().getString(R.string.favorite_1)));
+
+        if (isFavorite == true) {
+            actionAdapter.add(
+                    new Action(
+                            REMOVE_FAVORITE,
+                            getResources().getString(R.string.remove_favorite)));
+        } else {
+            actionAdapter.add(
+                    new Action(
+                            ADD_FAVORITE,
+                            getResources().getString(R.string.add_favorite)));
+        }
+
         actionAdapter.add(
                 new Action(
                         EXTERNAL_LINK,
@@ -187,7 +199,6 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else if (action.getId() == ADD_FAVORITE) {
-                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     Favorite favorite = new Favorite(mSelectedNews.getId(), uid);
                     DatabaseReference favorites = FirebaseDatabase.getInstance().getReference().child("favorites");
                     favorites.push().setValue(favorite).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -203,6 +214,25 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                             Toast.makeText(getActivity(), "Erro ao gravar a notícia", Toast.LENGTH_SHORT).show();
                         }
                     });
+                } else if (action.getId() == REMOVE_FAVORITE) {
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("favorites");
+                    reference.child(keepFirebaseFavoriteKey)
+                                            .removeValue()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    //removed with success
+                                                    Toast.makeText(getActivity(), "Favorito removido com sucesso", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            //removed failed
+                                                            Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    });
                 } else if (action.getId() == NEXT) {
                     Intent intent = new Intent(getActivity(), DetailsActivity.class);
                     intent.putExtra(DetailsActivity.NEWS, newsList.get(getNextNews()));
@@ -240,5 +270,36 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             }
         }
         return (pos == (newsList.size() - 1));
+    }
+
+    public void verifyFavorites() {
+        isFavorite = false;
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        final DatabaseReference fav_reference = FirebaseDatabase.getInstance().getReference();
+        Query query = fav_reference.child("favorites")
+                                   .orderByChild("user")
+                                   .equalTo(uid);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Favorite favorite = postSnapshot.getValue(Favorite.class);
+                        if (favorite.getId() == mSelectedNews.getId()) {
+                            keepFirebaseFavoriteKey = postSnapshot.getKey();
+                            Log.d(TAG, "firebase key for this news and user is: " + keepFirebaseFavoriteKey);
+                            isFavorite = true;
+                            break;
+                        }
+                    }
+                }
+                // delay method loadRows until we have te favorites
+                setupDetailsOverviewRow(isFavorite);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {  }
+        });
     }
 }

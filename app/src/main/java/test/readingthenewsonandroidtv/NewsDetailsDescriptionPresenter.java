@@ -10,7 +10,7 @@ public class NewsDetailsDescriptionPresenter extends CustomAbstractDetailsDescri
         if (news != null) {
             viewHolder.getTitle().setText(news.getTitle());
             viewHolder.getSubtitle().setText(news.getSource());
-            text = news.getArticle() + "\n\n" + news.getPhotoCredit();
+            text = news.getArticle() + "\n\nFoto: " + news.getPhotoCredit();
             viewHolder.getBody().setText(text);
         }
     }

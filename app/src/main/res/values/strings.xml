@@ -9,7 +9,8 @@
     <string name="logout">Sair</string>
 
     <string name="back_1">Página Inicial</string>
-    <string name="favorite_1">Favoritos</string>
+    <string name="add_favorite">Adiciona Favorito</string>
+    <string name="remove_favorite">Remove Favorito</string>
     <string name="external_link">Ler notícia</string>
     <string name="next_1">Próxima >></string>
 

@@ -70,6 +70,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
     private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
     private List<Integer> favorites;
+    private List<News> list;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -82,7 +83,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
         setupUIElements();
 
-        setupEventListeners();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
     }
 
     private void loadRows() {
-        List<News> list = NewsList.getNewsList();
+        list = NewsList.getNewsList();
 
         ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
@@ -167,16 +167,11 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
             if (item instanceof News) {
                 News news = (News) item;
-                Log.d(TAG, "Item: " + item.toString());
+                Log.d(TAG, "Item: " + news.toString());
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.NEWS, ((News) item).getId());
+                intent.putExtra(DetailsActivity.NEWS, news);
+                startActivity(intent);
 
-                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        getActivity(),
-                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                        DetailsActivity.SHARED_ELEMENT_NAME)
-                        .toBundle();
-                getActivity().startActivity(intent, bundle);
             } else if (item instanceof String) {
                 if (((String) item).contains(getString(R.string.error_fragment))) {
                     Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
@@ -256,6 +251,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
                         // delay method loadRows until we have te favorites
                         loadRows();
+                        setupEventListeners();
                     }
                 }
             }
