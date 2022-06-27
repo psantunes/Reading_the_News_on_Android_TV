@@ -1,22 +1,17 @@
-package test.readingthenewsonandroidtv;
-
-import android.util.Log;
+package test.readingthenewsonandroidtv.model;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
-import test.readingthenewsonandroidtv.model.Favorite;
+import test.readingthenewsonandroidtv.model.News;
 
 public final class NewsList {
     private static final String TAG = "NewsList";

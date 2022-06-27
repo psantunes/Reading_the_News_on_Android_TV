@@ -39,6 +39,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 import test.readingthenewsonandroidtv.model.Favorite;
+import test.readingthenewsonandroidtv.model.News;
+import test.readingthenewsonandroidtv.model.NewsList;
 
 /*
  * LeanbackDetailsFragment extends DetailsFragment, a Wrapper fragment for leanback details screens.
@@ -114,7 +116,6 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private void setupDetailsOverviewRow(Boolean isFavorite) {
         Log.d(TAG, "doInBackground: " + mSelectedNews.toString());
         final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedNews);
-
         row.setImageDrawable(
                 ContextCompat.getDrawable(getContext(), R.drawable.default_background));
         int width = convertDpToPixel(getActivity().getApplicationContext(), DETAIL_THUMB_WIDTH);
@@ -183,7 +184,6 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                 getActivity(), DetailsActivity.SHARED_ELEMENT_NAME);
         detailsPresenter.setListener(sharedElementHelper);
         detailsPresenter.setParticipatingEntranceTransition(true);
-
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {

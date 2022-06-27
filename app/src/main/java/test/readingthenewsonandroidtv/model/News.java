@@ -1,4 +1,4 @@
-package test.readingthenewsonandroidtv;
+package test.readingthenewsonandroidtv.model;
 
 import java.io.Serializable;
 

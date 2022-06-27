@@ -9,9 +9,10 @@ import androidx.leanback.widget.GuidedAction;
 
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.List;
+
+import test.readingthenewsonandroidtv.model.News;
+import test.readingthenewsonandroidtv.model.NewsList;
 
 public class MainFragment extends GuidedStepSupportFragment {
     private static final String TAG = "MainFragment";

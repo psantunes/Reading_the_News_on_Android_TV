@@ -1,5 +1,7 @@
 package test.readingthenewsonandroidtv;
 
+import test.readingthenewsonandroidtv.model.News;
+
 public class NewsDetailsDescriptionPresenter extends CustomAbstractDetailsDescriptionPresenter {
 
     @Override
