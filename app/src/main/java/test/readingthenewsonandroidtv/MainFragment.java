@@ -62,26 +62,21 @@ public class MainFragment extends GuidedStepSupportFragment {
     public void onGuidedActionClicked(GuidedAction action) {
         switch ((int) action.getId()){
             case 1:
-                Log.i(TAG, "escolhi a opção " + getString(R.string.news_slide_mode));
+                Log.i(TAG, "Option selected: " + getString(R.string.news_slide_mode));
 
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.NEWS, newsList.get(0));
                 startActivity(intent);
                 break;
             case 2:
-                Log.i(TAG, "escolhi a opção " + getString(R.string.favorites));
+                Log.i(TAG, "Option selected: " + getString(R.string.favorites));
                 Intent intent2 = new Intent(getActivity(), FavoriteActivity.class);
                 startActivity(intent2);
                 break;
             case 3:
-                Log.w(TAG, "escolhi a opção " + getString(R.string.logout));
-                // FirebaseAuth.getInstance().signOut(); keep the session in Firebase
+                Log.w(TAG, "Option selected: " + getString(R.string.logout));
                 getActivity().finishAndRemoveTask();
                 break;
-            default:
-                Log.w(TAG, "nada foi escolhido");
-                break;
-
         }
     }
 }

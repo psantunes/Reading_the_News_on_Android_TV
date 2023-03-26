@@ -233,9 +233,11 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
         final DatabaseReference fav_reference = FirebaseDatabase.getInstance().getReference();
         Query query = fav_reference.child("favorites").orderByChild("user").equalTo(uid);
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Favorite favorite = postSnapshot.getValue(Favorite.class);
@@ -248,9 +250,11 @@ public class FavoriteFragment extends BrowseSupportFragment {
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {  }
         });
+
+        Log.i(TAG, "Favorites tem " + favorites.size() + " elementos");
+
     }
 }

@@ -68,11 +68,11 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private final List<News> newsList = NewsList.getNewsList();
     private Boolean isFavorite;
     private String keepFirebaseFavoriteKey;
-    private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate DetailsFragment");
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
 
@@ -84,8 +84,10 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
 
-            verifyFavorites();
+            //verifyFavorites();
             // function setupDetailsOverviewRow() is called inside verify favorites
+            setupDetailsOverviewRow(false);
+
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
             initializeBackground(mSelectedNews);
@@ -141,7 +143,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                         HOME,
                         getResources().getString(R.string.back_1)));
 
-        if (isFavorite == true) {
+        if (isFavorite) {
             actionAdapter.add(
                     new Action(
                             REMOVE_FAVORITE,
@@ -273,6 +275,8 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     }
 
     public void verifyFavorites() {
+        Log.d(TAG, "entrei nos favoritos");
+
         isFavorite = false;
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -280,12 +284,20 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
         Query query = fav_reference.child("favorites")
                                    .orderByChild("user")
                                    .equalTo(uid);
+        Log.d(TAG, query.toString());
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    Log.d(TAG, "entrei na função");
+
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Favorite favorite = postSnapshot.getValue(Favorite.class);
+
+                        Log.d(TAG, "Id da notícia no Firebase:" + favorite.getId());
+                        Log.d(TAG, "Id da notícia da Lista:" + mSelectedNews.getId());
+
                         if (favorite.getId() == mSelectedNews.getId()) {
                             keepFirebaseFavoriteKey = postSnapshot.getKey();
                             Log.d(TAG, "firebase key for this news and user is: " + keepFirebaseFavoriteKey);
@@ -294,7 +306,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                         }
                     }
                 }
-                // delay method loadRows until we have te favorites
+                // delay method loadRows until we have favorites
                 setupDetailsOverviewRow(isFavorite);
             }
 
