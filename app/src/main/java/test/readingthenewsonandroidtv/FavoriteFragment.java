@@ -88,7 +88,10 @@ public class FavoriteFragment extends BrowseSupportFragment {
     }
 
     private void loadRows() {
-        list = NewsList.getNewsList();
+        NewsList newsList = new NewsList();
+        List<News> list = newsList.getNewsList();
+
+//        list = NewsList.getNewsList();
 
         ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
@@ -160,7 +163,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
             if (item instanceof News) {
                 News news = (News) item;
-                Log.d(TAG, "Item: " + news.toString());
+                Log.d(TAG, "Item: " + news);
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.NEWS, news);
                 startActivity(intent);

@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentActivity;
  */
 public class DetailsActivity extends FragmentActivity {
     public static final String SHARED_ELEMENT_NAME = "hero";
-    public static final String MOVIE = "Movie";
     public static final String NEWS = "News";
 
     /**

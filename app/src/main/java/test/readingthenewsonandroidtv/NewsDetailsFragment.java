@@ -37,6 +37,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import test.readingthenewsonandroidtv.model.Favorite;
 import test.readingthenewsonandroidtv.model.News;
@@ -58,14 +59,15 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private static final int DETAIL_THUMB_WIDTH = 600;
     private static final int DETAIL_THUMB_HEIGHT = 600;
 
+    private List<News> list;
     private News mSelectedNews;
+    private int newsNumber;
 
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
 
     private DetailsSupportFragmentBackgroundController mDetailsBackground;
 
-    private final List<News> newsList = NewsList.getNewsList();
     private Boolean isFavorite;
     private String keepFirebaseFavoriteKey;
     private final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -75,11 +77,13 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
+        loadNews();
 
         mDetailsBackground = new DetailsSupportFragmentBackgroundController(this);
 
-        mSelectedNews =
-                (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
+        newsNumber = (int) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
+        mSelectedNews = list.get(newsNumber);
+        //  (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
         if (mSelectedNews != null) {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
@@ -95,7 +99,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
-    }
+}
 
     private void initializeBackground(News data) {
         mDetailsBackground.setParallaxDrawableMaxOffset(10);
@@ -237,7 +241,8 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                                                     });
                 } else if (action.getId() == NEXT) {
                     Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                    intent.putExtra(DetailsActivity.NEWS, newsList.get(getNextNews()));
+                    newsNumber++;
+                    intent.putExtra(DetailsActivity.NEWS,newsNumber);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
@@ -252,26 +257,36 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
         return Math.round((float) dp * density);
     }
 
-    private int getNextNews() {
-        int count = 0;
-        for (News news : newsList) {
-            if (news.getId() == mSelectedNews.getId()) {
-                count = newsList.indexOf(news);
-                count++;
-            }
-        }
-        return count;
-    }
-
     private boolean checkIfItLast() {
         int pos = 0;
-        for (News news : newsList) {
+        for (News news : list) {
             if (news.getId() == mSelectedNews.getId()) {
-                pos = newsList.indexOf(news);
+                pos = list.indexOf(news);
                 break;
             }
         }
-        return (pos == (newsList.size() - 1));
+        return (pos == (list.size() - 1));
+    }
+
+    // call NewsList. thread is used to delay application until list is load
+    public void loadNews() {
+        try {
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d(TAG, "comecei a T1");
+                    list = NewsList.getNewsList();
+                }});
+
+            t1.start();
+            Log.d(TAG, "dei start na t1");
+            t1.join();
+
+            Log.d(TAG, "t1 terminou");
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void verifyFavorites() {

@@ -16,14 +16,6 @@ import test.readingthenewsonandroidtv.model.NewsList;
 
 public class MainFragment extends GuidedStepSupportFragment {
     private static final String TAG = "MainFragment";
-    public static List<News> newsList = NewsList.getNewsList();
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate");
-        super.onActivityCreated(savedInstanceState);
-
-    }
 
     @Override
     public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
@@ -63,9 +55,8 @@ public class MainFragment extends GuidedStepSupportFragment {
         switch ((int) action.getId()){
             case 1:
                 Log.i(TAG, "Option selected: " + getString(R.string.news_slide_mode));
-
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.NEWS, newsList.get(0));
+                intent.putExtra(DetailsActivity.NEWS, 0);
                 startActivity(intent);
                 break;
             case 2:
@@ -80,3 +71,4 @@ public class MainFragment extends GuidedStepSupportFragment {
         }
     }
 }
+
