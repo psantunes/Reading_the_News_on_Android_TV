@@ -26,20 +26,10 @@ import androidx.leanback.widget.OnActionClickedListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import test.readingthenewsonandroidtv.model.Favorite;
+import test.readingthenewsonandroidtv.dao.FavoriteRepository;
 import test.readingthenewsonandroidtv.model.News;
 import test.readingthenewsonandroidtv.model.NewsList;
 
@@ -69,8 +59,6 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private DetailsSupportFragmentBackgroundController mDetailsBackground;
 
     private Boolean isFavorite;
-    private String keepFirebaseFavoriteKey;
-    private final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,9 +76,9 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
 
-            //verifyFavorites();
+            verifyFavorites();
             // function setupDetailsOverviewRow() is called inside verify favorites
-            setupDetailsOverviewRow(false);
+            //setupDetailsOverviewRow(false);
 
             setupDetailsOverviewRowPresenter();
             setAdapter(mAdapter);
@@ -205,40 +193,29 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else if (action.getId() == ADD_FAVORITE) {
-                    Favorite favorite = new Favorite(mSelectedNews.getId(), uid);
-                    DatabaseReference favorites = FirebaseDatabase.getInstance().getReference().child("favorites");
-                    favorites.push().setValue(favorite).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getActivity(),
-                                    "Notícia gravada com sucesso",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "Erro ao gravar a notícia", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
+                    boolean saveNews = favoriteRepository.insert(mSelectedNews);
+                    if (saveNews) {
+                        Toast.makeText(getActivity(),
+                                "Notícia gravada com sucesso",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(),
+                                "Erro ao gravar a notícia",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else if (action.getId() == REMOVE_FAVORITE) {
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("favorites");
-                    reference.child(keepFirebaseFavoriteKey)
-                                            .removeValue()
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    //removed with success
-                                                    Toast.makeText(getActivity(), "Favorito removido com sucesso", Toast.LENGTH_SHORT).show();
-                                                }
-                                            })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            //removed failed
-                                                            Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                                        }
-                                                    });
+                    FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
+                    int deleteNews = favoriteRepository.delete(mSelectedNews.getId());
+                    if (deleteNews > 0) {
+                        Toast.makeText(getActivity(),
+                                "Favorito removido com sucesso",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(),
+                                "Erro ao remover o favorito",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else if (action.getId() == NEXT) {
                     Intent intent = new Intent(getActivity(), DetailsActivity.class);
                     newsNumber++;
@@ -271,18 +248,9 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     // call NewsList. thread is used to delay application until list is load
     public void loadNews() {
         try {
-            Thread t1 = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(TAG, "comecei a T1");
-                    list = NewsList.getNewsList();
-                }});
-
+            Thread t1 = new Thread(() -> list = NewsList.getNewsList());
             t1.start();
-            Log.d(TAG, "dei start na t1");
             t1.join();
-
-            Log.d(TAG, "t1 terminou");
         }
         catch (InterruptedException e) {
             e.printStackTrace();
@@ -290,43 +258,10 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     }
 
     public void verifyFavorites() {
-        Log.d(TAG, "entrei nos favoritos");
-
         isFavorite = false;
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
+        isFavorite = favoriteRepository.checkIfIsFavorite(mSelectedNews.getId());
 
-        final DatabaseReference fav_reference = FirebaseDatabase.getInstance().getReference();
-        Query query = fav_reference.child("favorites")
-                                   .orderByChild("user")
-                                   .equalTo(uid);
-        Log.d(TAG, query.toString());
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    Log.d(TAG, "entrei na função");
-
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Favorite favorite = postSnapshot.getValue(Favorite.class);
-
-                        Log.d(TAG, "Id da notícia no Firebase:" + favorite.getId());
-                        Log.d(TAG, "Id da notícia da Lista:" + mSelectedNews.getId());
-
-                        if (favorite.getId() == mSelectedNews.getId()) {
-                            keepFirebaseFavoriteKey = postSnapshot.getKey();
-                            Log.d(TAG, "firebase key for this news and user is: " + keepFirebaseFavoriteKey);
-                            isFavorite = true;
-                            break;
-                        }
-                    }
-                }
-                // delay method loadRows until we have favorites
-                setupDetailsOverviewRow(isFavorite);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {  }
-        });
+        setupDetailsOverviewRow(isFavorite);
     }
 }
