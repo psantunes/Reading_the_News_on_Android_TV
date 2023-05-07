@@ -23,6 +23,7 @@ public class FavoriteRepository {
         ContentValues value = new ContentValues();
         value.put("ID", news.getId());
         value.put("TITLE", news.getTitle());
+        value.put("ARTICLE", news.getArticle());
         value.put("BGIMAGEURL", news.getArticle());
         value.put("CARDIMAGEURL", news.getCardImageUrl());
         value.put("SOURCE", news.getSource());
@@ -51,7 +52,7 @@ public class FavoriteRepository {
         List<News> newsList = new ArrayList<>();
 
         try {
-            String stringQuery = "SELECT ID, TITLE, BGIMAGEURL, CARDIMAGEURL, SOURCE, " +
+            String stringQuery = "SELECT ID, TITLE, ARTICLE, BGIMAGEURL, CARDIMAGEURL, SOURCE, " +
                     "LINK, PHOTOCREDIT, PUBLISHEDAT " +
                     "FROM FAVORITES " +
                     "ORDER BY PUBLISHEDAT ASC";
@@ -62,6 +63,7 @@ public class FavoriteRepository {
                 News news = new News();
                 news.setId(cursor.getInt(cursor.getColumnIndex("ID")));
                 news.setTitle(cursor.getString(cursor.getColumnIndex("TITLE")));
+                news.setArticle(cursor.getString(cursor.getColumnIndex("ARTICLE")));
                 news.setBgImageUrl(cursor.getString(cursor.getColumnIndex("BGIMAGEURL")));
                 news.setCardImageUrl(cursor.getString(cursor.getColumnIndex("CARDIMAGEURL")));
                 news.setSource(cursor.getString(cursor.getColumnIndex("SOURCE")));

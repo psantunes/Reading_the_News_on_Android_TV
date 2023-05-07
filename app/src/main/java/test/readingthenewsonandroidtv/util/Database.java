@@ -15,14 +15,15 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = " CREATE TABLE FAVORITES (" +
-                " ID   INTEGER PRIMARY KEY, " +
-                " TITLE  TEXT    NOT NULL," +
-                " BGIMAGEURL   TEXT    NOT NULL," +
-                " CARDIMAGEURL  TEXT    NOT NULL," +
-                " SOURCE   TEXT    NOT NULL," +
-                " LINK   TEXT    NOT NULL," +
-                " PHOTOCREDIT   TEXT    NOT NULL," +
-                " PUBLISHEDAT    NOT NULL)";
+                "ID INTEGER PRIMARY KEY, " +
+                "ARTICLE TEXT NOT NULL," +
+                "TITLE TEXT NOT NULL," +
+                "BGIMAGEURL TEXT NOT NULL," +
+                "CARDIMAGEURL TEXT NOT NULL," +
+                "SOURCE TEXT NOT NULL," +
+                "LINK TEXT NOT NULL," +
+                "PHOTOCREDIT TEXT NOT NULL," +
+                "PUBLISHEDAT NOT NULL)";
         db.execSQL(createTable);
     }
 
