@@ -57,6 +57,7 @@ public class MainFragment extends GuidedStepSupportFragment {
                 Log.i(TAG, "Option selected: " + getString(R.string.news_slide_mode));
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.NEWS, 0);
+                intent.putExtra(DetailsActivity.SOURCE, 0);
                 startActivity(intent);
                 break;
             case 2:

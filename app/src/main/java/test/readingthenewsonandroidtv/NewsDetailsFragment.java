@@ -52,6 +52,7 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     private List<News> list;
     private News mSelectedNews;
     private int newsNumber;
+    private int source;
 
     private ArrayObjectAdapter mAdapter;
     private ClassPresenterSelector mPresenterSelector;
@@ -65,11 +66,26 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
-        loadNews();
+        source = (int) getActivity().getIntent().getSerializableExtra(DetailsActivity.SOURCE);
+        if (source == 0) {
+            Log.w(TAG, "Take news from JSON");
+            loadNewsFromServer();
+            newsNumber = (int) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
+        } else {
+            Log.w(TAG, "Take news from SQLite");
+            loadNewsFromDatabase();
+
+            News takeNews = (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
+
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() == takeNews.getId()) {
+                    newsNumber = i;
+                }
+            }
+        }
 
         mDetailsBackground = new DetailsSupportFragmentBackgroundController(this);
 
-        newsNumber = (int) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
         mSelectedNews = list.get(newsNumber);
         //  (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
         if (mSelectedNews != null) {
@@ -219,7 +235,13 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
                 } else if (action.getId() == NEXT) {
                     Intent intent = new Intent(getActivity(), DetailsActivity.class);
                     newsNumber++;
-                    intent.putExtra(DetailsActivity.NEWS,newsNumber);
+                    if (source == 0) {
+                        intent.putExtra(DetailsActivity.NEWS, newsNumber);
+                        intent.putExtra(DetailsActivity.SOURCE, 0);
+                    } else {
+                        intent.putExtra(DetailsActivity.NEWS, list.get(newsNumber));
+                        intent.putExtra(DetailsActivity.SOURCE, 1);
+                    }
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
@@ -246,11 +268,23 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
     }
 
     // call NewsList. thread is used to delay application until list is load
-    public void loadNews() {
+    public void loadNewsFromServer() {
         try {
             Thread t1 = new Thread(() -> list = NewsList.getNewsList());
             t1.start();
             t1.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadNewsFromDatabase() {
+        try {
+            FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
+            Thread t2 = new Thread(() -> list = favoriteRepository.getAll());
+            t2.start();
+            t2.join();
         }
         catch (InterruptedException e) {
             e.printStackTrace();

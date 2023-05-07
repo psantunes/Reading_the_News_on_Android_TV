@@ -52,7 +52,7 @@ public class FavoriteRepository {
 
         try {
             String stringQuery = "SELECT ID, TITLE, BGIMAGEURL, CARDIMAGEURL, SOURCE, " +
-                    "LINK, PHOTOCREDIT, PUBLISHEDAT" +
+                    "LINK, PHOTOCREDIT, PUBLISHEDAT " +
                     "FROM FAVORITES " +
                     "ORDER BY PUBLISHEDAT ASC";
 

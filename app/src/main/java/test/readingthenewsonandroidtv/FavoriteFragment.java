@@ -45,9 +45,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import test.readingthenewsonandroidtv.dao.FavoriteRepository;
 import test.readingthenewsonandroidtv.model.Favorite;
 import test.readingthenewsonandroidtv.model.News;
-import test.readingthenewsonandroidtv.model.NewsList;
 
 public class FavoriteFragment extends BrowseSupportFragment {
     private static final String TAG = "FavoriteFragment";
@@ -70,11 +70,14 @@ public class FavoriteFragment extends BrowseSupportFragment {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
-        retrieveFavorites();
-
         prepareBackgroundManager();
 
         setupUIElements();
+
+        // retrieveFavorites();
+        loadRows();
+
+        setupEventListeners();
 
     }
 
@@ -88,21 +91,17 @@ public class FavoriteFragment extends BrowseSupportFragment {
     }
 
     private void loadRows() {
-        NewsList newsList = new NewsList();
-        List<News> list = newsList.getNewsList();
-
-//        list = NewsList.getNewsList();
+        FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
+        list = favoriteRepository.getAll();
 
         ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
 
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < favorites.size(); j++) {
-                if (favorites.get(j) == list.get(i).getId()) {
-                    listRowAdapter.add(list.get(i));
-                }
-            }
+            Log.d(TAG, "onDestroy: " + mBackgroundTimer);
+
+            listRowAdapter.add(list.get(i));
         }
 
         HeaderItem header = new HeaderItem(0, getString(R.string.favorites));
@@ -166,6 +165,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
                 Log.d(TAG, "Item: " + news);
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.NEWS, news);
+                intent.putExtra(DetailsActivity.SOURCE, 1);
                 startActivity(intent);
 
             } else if (item instanceof String) {
