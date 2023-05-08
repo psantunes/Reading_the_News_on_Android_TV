@@ -1,34 +1,46 @@
-[{
+[
+	{
 	"id": "1",
-	"title": "Síndromes gripais pressionam hospitais de Porto Alegre",
-	"article": "Mais de 430 pacientes aguardavam internações em Porto Alegre nesta terça-feira. A situação compromete consultas eletivas ou de menor gravidade e é causada em especial por síndromes gripais.",
+	"title": "Número de usuários da passagem escolar cai 77% em Porto Alegre",
+	"article": "O número de beneficiários do transporte escolar na Capital caiu 77% entre 2019 e 2022. Em 2021, o prefeito Sebastião Melo sancionou o projeto que reduziu as isenções nos ônibus de Porto Alegre. Para o vereador Giovani Culau, queda também pode estar associada também à evasão escolar.",
 	"source": "Matinal Jornalismo",
-	"link": "https://www.matinaljornalismo.com.br/matinal/newsletter/sindromes-gripais-pressionam-hospitais-de-porto-alegre-deixando-mais-de-400-a-espera-por-internacao/",
-	"publishedAt": "2022-05-25",
-	"bgImageUrl": "https://teleseries.com.br/wp-content/uploads/2023/03/pucrs_g.jpg",
-	"cardImageUrl": "https://teleseries.com.br/wp-content/uploads/2023/03/pucrs_p.jpg",
-	"photoCredit": "Bruno Todeschini/Divulgação PUCRS"
-},
+	"link": "https://www.matinaljornalismo.com.br/matinal/newsletter/apos-restricoes-numero-de-usuarios-da-passagem-escolar-cai-77-em-porto-alegre/",
+	"publishedAt": "2022-05-05",
+	"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/tri_g.jpg",
+	"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/tri_p.jpg",
+	"photoCredit": "Cesar Lopes/PMPA"
+	},
 	{
 		"id": "2",
-		"title": "Caetano, Gil e outros ícones da cultura assinam Carta ao Futuro da Cultura Brasileira",
-		"article": "TEXTO LONGO. Mais de 430 pacientes aguardavam internações em Porto Alegre nesta terça-feira, em um cenário de emergências e hospitais da Capital superlotados. A situação, que compromete também as consultas eletivas ou de menor gravidade, é causada em especial por síndromes gripais, segundo o diretor Atenção Hospitalar e Urgências da SMS, Francisco Isaías.",
-		"source": "Matinal Jornalismo",
-		"link": "https://www.matinaljornalismo.com.br/matinal/newsletter/sindromes-gripais-pressionam-hospitais-de-porto-alegre-deixando-mais-de-400-a-espera-por-internacao/",
-		"publishedAt": "2022-05-25",
-		"bgImageUrl": "https://teleseries.com.br/wp-content/uploads/2023/03/gil_g.jpg",
-		"cardImageUrl": "https://teleseries.com.br/wp-content/uploads/2023/03/gil_p.jpg",
-		"photoCredit": "Hallit/Gilberto Gil Press"
+		"title": "Cultura e Economia Criativa representam 3,11% do PIB brasileiro",
+		"article": "Os setores da produção artística, do patrimônio e da economia criativa movimentaram R$ 230,14 bi dos R$ 7,4 trilhões que a economia brasileira gerou em 2020. Os setores criativos, empregam 7,4 milhões de trabalhadores no país, e geram mais PIB do que o setor automotivo (2,5%). e próximo do setor da construção civil (4%).",
+		"source": "Nonada",
+		"link": "https://www.nonada.com.br/2023/04/pesquisa-mostra-que-cultura-e-economia-criativa-representam-311-do-pib-brasileiro-ultrapassando-o-setor-automotivo/",
+		"publishedAt": "2022-04-10",
+		"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/musica_g.jpg",
+		"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/musica_p.jpg",
+		"photoCredit": "Tomaz Silva/Agência Brasil"
 	},
 	{
 		"id": "3",
-		"title": "Inter vence Goiás fora de casa e encosta nos líderes do Brasileirão",
-		"article": "Com gols de Edenilson e Alan Patrick, o Colorado venceu o Goiás por 2 a 1 nesta quarta-feira, no estádio da Serrinha. O resultado mantém o time de Mano Menezes no compasso dos líderes da Série A: são 16 jogos sem perder, na terceira colocação.",
-		"source": "Correio do Povo",
+		"title": "IFRS realiza avaliação de Língua Portuguesa para estrangeiros, imigrantes e refugiados",
+		"article": "Estrangeiros que concluíram algum curso de língua oferecido pelo Instituto podem se inscrever até o dia 21 de maio para a avaliação, usada no processo de naturalização. Prova acontecerá nos campi de Bento Gonçalves, Canoas e Rio Grande.",
+		"source": "Comunicação IFRS",
+		"link": "https://ifrs.edu.br/ifrs-realiza-avaliacao-de-lingua-portuguesa-para-estrangeiros-imigrantes-e-refugiados/",
+		"publishedAt": "2023-05-04",
+		"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/ifrs_g.jpg",
+		"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/ifrs_p.jpg",
+		"photoCredit": "Comunicação IFRS Canoas"
+	},
+	{
+		"id": "4",
+		"title": "Prefeitura de Porto Alegre nega que irá leiloar terrenos onde estão quadras de escolas de samba",
+		"article": "Secretário municipal de Administração e Patrimônio, André Barbosa, negou que Prefeitura planeje leiloar os terrenos onde estão localizadas as quadras das escolas de samba Praiana, Imperadores do Samba e Banda Saldanha, na Av. Padre Cacique, ao lado do Estádio Beira-Rio. \"Se a decisão for vender, nós vamos dialogar com todas as escolas de samba e buscar alternativas, para não deixar ninguém na mão\", afirmou.",
+		"source": "Sul21",
 		"link": "https://www.correiodopovo.com.br/esportes/inter/inter-vence-goi%C3%A1s-fora-de-casa-e-segue-no-compasso-dos-l%C3%ADderes-do-brasileir%C3%A3o-1.840692",
-		"publishedAt": "2022-06-15",
-		"bgImageUrl": "https://teleseries.com.br/wp-content/uploads/2023/03/inter_g.jpg",
-		"cardImageUrl": "https://teleseries.com.br/wp-content/uploads/2023/03/inter_p.jpg",
-		"photoCredit": "Ricardo Duarte/Internacional"
+		"publishedAt": "2023-05-06",
+		"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/imperadores_g.jpg",
+		"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/imperadores_p.jpg",
+		"photoCredit": "Luiza Castro/Sul21"
 	}
 ]
