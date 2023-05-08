@@ -6,8 +6,8 @@
 	"source": "Matinal Jornalismo",
 	"link": "https://www.matinaljornalismo.com.br/matinal/newsletter/apos-restricoes-numero-de-usuarios-da-passagem-escolar-cai-77-em-porto-alegre/",
 	"publishedAt": "2022-05-05",
-	"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/tri_g.jpg",
-	"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/tri_p.jpg",
+	"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/tri_g.jpg",
+	"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/tri_p.jpg",
 	"photoCredit": "Cesar Lopes/PMPA"
 	},
 	{
@@ -17,8 +17,8 @@
 		"source": "Nonada",
 		"link": "https://www.nonada.com.br/2023/04/pesquisa-mostra-que-cultura-e-economia-criativa-representam-311-do-pib-brasileiro-ultrapassando-o-setor-automotivo/",
 		"publishedAt": "2022-04-10",
-		"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/musica_g.jpg",
-		"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/musica_p.jpg",
+		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/musica_g.jpg",
+		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/musica_p.jpg",
 		"photoCredit": "Tomaz Silva/Agência Brasil"
 	},
 	{
@@ -28,8 +28,8 @@
 		"source": "Comunicação IFRS",
 		"link": "https://ifrs.edu.br/ifrs-realiza-avaliacao-de-lingua-portuguesa-para-estrangeiros-imigrantes-e-refugiados/",
 		"publishedAt": "2023-05-04",
-		"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/ifrs_g.jpg",
-		"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/ifrs_p.jpg",
+		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/ifrs_g.jpg",
+		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/ifrs_p.jpg",
 		"photoCredit": "Comunicação IFRS Canoas"
 	},
 	{
@@ -39,8 +39,8 @@
 		"source": "Sul21",
 		"link": "https://www.correiodopovo.com.br/esportes/inter/inter-vence-goi%C3%A1s-fora-de-casa-e-segue-no-compasso-dos-l%C3%ADderes-do-brasileir%C3%A3o-1.840692",
 		"publishedAt": "2023-05-06",
-		"bgImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/imperadores_g.jpg",
-		"cardImageUrl": "https://github.com/psantunes/Reading_the_News_on_Android_TV/blob/main/docs/imperadores_p.jpg",
+		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/imperadores_g.jpg",
+		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/imperadores_p.jpg",
 		"photoCredit": "Luiza Castro/Sul21"
 	}
 ]
