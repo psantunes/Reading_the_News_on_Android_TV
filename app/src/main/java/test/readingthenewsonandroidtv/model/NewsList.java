@@ -34,13 +34,11 @@ public final class NewsList {
         list = new ArrayList<>();
         try
         {
-            System.out.println("*** Entrei no primeiro try ***");
             URL jsonUrl = new URL("https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/json_file_example.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
             try {
-                System.out.println("*** Entrei no segundo try ***");
                 News[] newsListFromJson = mapper.readValue(jsonUrl, News[].class);
                 for (News news : newsListFromJson) {
                     System.out.println(news);
