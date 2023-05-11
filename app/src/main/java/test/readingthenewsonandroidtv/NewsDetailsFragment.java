@@ -68,11 +68,13 @@ public class NewsDetailsFragment extends DetailsSupportFragment {
 
         source = (int) getActivity().getIntent().getSerializableExtra(DetailsActivity.SOURCE);
         if (source == 0) {
-            Log.w(TAG, "Take news from JSON");
+            Log.w(TAG, "Loading data from JSON file");
             loadNewsFromServer();
             newsNumber = (int) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);
+            Log.w(TAG, "Newsnumber =" + newsNumber);
+
         } else {
-            Log.w(TAG, "Take news from SQLite");
+            Log.w(TAG, "Loading data from SQLite");
             loadNewsFromDatabase();
 
             News takeNews = (News) getActivity().getIntent().getSerializableExtra(DetailsActivity.NEWS);

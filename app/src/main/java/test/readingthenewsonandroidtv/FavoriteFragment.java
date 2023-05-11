@@ -32,21 +32,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import test.readingthenewsonandroidtv.dao.FavoriteRepository;
-import test.readingthenewsonandroidtv.model.Favorite;
 import test.readingthenewsonandroidtv.model.News;
 
 public class FavoriteFragment extends BrowseSupportFragment {
@@ -74,7 +65,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
         setupUIElements();
 
-        // retrieveFavorites();
         loadRows();
 
         setupEventListeners();
@@ -93,6 +83,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
     private void loadRows() {
         FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
         list = favoriteRepository.getAll();
+        Log.i(TAG, "Favorites tem " + favorites.size() + " elementos");
 
         ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
@@ -228,36 +219,5 @@ public class FavoriteFragment extends BrowseSupportFragment {
         @Override
         public void onUnbindViewHolder(ViewHolder viewHolder) {
         }
-    }
-
-    public void retrieveFavorites() {
-        favorites = new ArrayList<>();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        final DatabaseReference fav_reference = FirebaseDatabase.getInstance().getReference();
-        Query query = fav_reference.child("favorites").orderByChild("user").equalTo(uid);
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Favorite favorite = postSnapshot.getValue(Favorite.class);
-                        int id = favorite.getId();
-                        favorites.add(id);
-
-                        // delay method loadRows until we have te favorites
-                        loadRows();
-                        setupEventListeners();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {  }
-        });
-
-        Log.i(TAG, "Favorites tem " + favorites.size() + " elementos");
-
     }
 }
