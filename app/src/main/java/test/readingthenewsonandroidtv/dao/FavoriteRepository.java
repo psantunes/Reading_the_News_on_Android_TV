@@ -24,7 +24,7 @@ public class FavoriteRepository {
         value.put("ID", news.getId());
         value.put("TITLE", news.getTitle());
         value.put("ARTICLE", news.getArticle());
-        value.put("BGIMAGEURL", news.getArticle());
+        value.put("BGIMAGEURL", news.getBgImageUrl());
         value.put("CARDIMAGEURL", news.getCardImageUrl());
         value.put("SOURCE", news.getSource());
         value.put("LINK", news.getLink());
