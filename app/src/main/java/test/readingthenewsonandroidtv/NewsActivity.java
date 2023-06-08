@@ -31,11 +31,13 @@ import test.readingthenewsonandroidtv.dao.FavoriteRepository;
 import test.readingthenewsonandroidtv.databinding.ActivityNewsBinding;
 import test.readingthenewsonandroidtv.model.News;
 import test.readingthenewsonandroidtv.model.NewsList;
+import test.readingthenewsonandroidtv.util.Mode;
 
 public class NewsActivity extends FragmentActivity {
     private static final String TAG = "NewsActivity";
     public static final String NEWS = "news";
     public static final String SOURCE = "source";
+    public static final String MODE = "mode";
 
     private List<News> list;
     private News selectedNews;
@@ -43,6 +45,7 @@ public class NewsActivity extends FragmentActivity {
     private int newsNumber;
     private int nextNews;
     private int source;
+    private Mode mode;
     private View view;
     private Button button1;
     private Button button2;
@@ -58,13 +61,15 @@ public class NewsActivity extends FragmentActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_news);
 
         source = (int) getIntent().getSerializableExtra(NewsActivity.SOURCE);
+        mode = (Mode) getIntent().getSerializableExtra(NewsActivity.MODE);
+        Log.d(TAG, "Mode = " + mode.toString());
 
         if (source == 0) {
-            Log.w(TAG, "Loading data from JSON file");
+            Log.d(TAG, "Loading data from JSON file");
             loadNewsFromServer();
             newsNumber = (int) getIntent().getSerializableExtra(NewsActivity.NEWS);
         } else {
-            Log.w(TAG, "Loading data from SQLite");
+            Log.d(TAG, "Loading data from SQLite");
             loadNewsFromDatabase();
             int newsId = (int) getIntent().getSerializableExtra(NewsActivity.NEWS);
             for (int i = 0; i < list.size(); i++) {
@@ -78,9 +83,23 @@ public class NewsActivity extends FragmentActivity {
         binding.setImageUrl(selectedNews.getBgImageUrl());
         binding.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
 
-        buttons();
-        if (source == 1) {
-            button2.setText(getString(R.string.remove_favorite));
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+        button4 = findViewById(R.id.button4);
+        if (mode == Mode.Navigation) {
+            if (source == 1) {
+                button2.setText(getString(R.string.remove_favorite));
+            }
+            buttonFunctions();
+        } else {
+            View menu = findViewById(R.id.menu);
+            menu.setVisibility(View.GONE);
+            button1.setVisibility(View.GONE);
+            button1.setVisibility(View.GONE);
+            button2.setVisibility(View.GONE);
+            button3.setVisibility(View.GONE);
+            button4.setVisibility(View.GONE);
         }
 
         view = binding.getRoot();
@@ -142,18 +161,16 @@ public class NewsActivity extends FragmentActivity {
         }
     }
 
-    public void buttons() {
-        Log.d(TAG, "render buttons");
+    public void buttonFunctions() {
+        Log.d(TAG, "method buttonFunctions");
 
         // Button 1 - previous
-        button1 = findViewById(R.id.button1);
         button1.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         });
 
         // Button 2 - add or remove favorites
-        button2 = findViewById(R.id.button2);
         button2.setOnClickListener(v -> {
             Log.d(TAG, "Clicked on button 2 - Add favorites");
             FavoriteRepository favoriteRepository = new FavoriteRepository(getApplicationContext());
@@ -184,7 +201,6 @@ public class NewsActivity extends FragmentActivity {
         });
 
         // Button 3 - external_link
-        button3 = findViewById(R.id.button3);
         button3.setOnClickListener(v -> {
             Log.d(TAG, "Clicked on button 3 - read the news");
             try {
@@ -197,7 +213,6 @@ public class NewsActivity extends FragmentActivity {
         });
 
         // Button 4 - next
-        button4 = findViewById(R.id.button4);
         if (checkIfItLast()) {
             button4.setVisibility(View.GONE);
         }

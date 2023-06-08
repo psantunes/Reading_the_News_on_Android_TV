@@ -2,8 +2,10 @@
     <string name="app_name">Reading The News On Android TV</string>
     <string name="app_name_desc">An experimental app made by @PSAntunes</string>
 
-    <string name="news_slide_mode">Notícias do Dia</string>
-    <string name="news_slide_mode_desc">Leia as notícias que selecionamos para você hoje</string>
+    <string name="news_nav_mode">Notícias do Dia</string>
+    <string name="news_nav_mode_desc">Leia as notícias que selecionamos para você hoje</string>
+    <string name="news_kyosk_mode">Notícias em Modo Quiosque</string>
+    <string name="news_kyosk_mode_desc">Exibe notícias de forma automática</string>
     <string name="favorites">Favoritos</string>
     <string name="favorites_desc">Releia as notícias que você salvou</string>
     <string name="logout">Sair</string>
