@@ -146,81 +146,73 @@ public class NewsActivity extends FragmentActivity {
         Log.d(TAG, "render buttons");
 
         // Button 1 - previous
-        button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
+        button1 = findViewById(R.id.button1);
+        button1.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         });
 
         // Button 2 - add or remove favorites
-        button2 = (Button) findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d(TAG, "Clicked on button 2 - Add favorites");
-                FavoriteRepository favoriteRepository = new FavoriteRepository(getApplicationContext());
+        button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(v -> {
+            Log.d(TAG, "Clicked on button 2 - Add favorites");
+            FavoriteRepository favoriteRepository = new FavoriteRepository(getApplicationContext());
 
-                if (button2.getText() == getString(R.string.add_favorite)) {
-                    boolean saveNews = favoriteRepository.insert(selectedNews);
-                    if (saveNews) {
-                        Toast.makeText(getApplicationContext(),
-                                "Notícia gravada com sucesso",
-                                Toast.LENGTH_SHORT).show();
-                        button2.setText(getString(R.string.remove_favorite));
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                "Erro ao gravar a notícia",
-                                Toast.LENGTH_SHORT).show();
-                    }
+            if (button2.getText() == getString(R.string.add_favorite)) {
+                boolean saveNews = favoriteRepository.insert(selectedNews);
+                if (saveNews) {
+                    Toast.makeText(getApplicationContext(),
+                            "Notícia gravada com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    button2.setText(getString(R.string.remove_favorite));
                 } else {
-                    int deleteNews = favoriteRepository.delete(selectedNews.getId());
-                    if (deleteNews > 0) {
-                        Toast.makeText(getApplicationContext(), "Favorito removido com sucesso",
-                                Toast.LENGTH_SHORT).show();
-                        button2.setText(getString(R.string.add_favorite));
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Erro ao remover o favorito",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getApplicationContext(),
+                            "Erro ao gravar a notícia",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                int deleteNews = favoriteRepository.delete(selectedNews.getId());
+                if (deleteNews > 0) {
+                    Toast.makeText(getApplicationContext(), "Favorito removido com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    button2.setText(getString(R.string.add_favorite));
+                } else {
+                    Toast.makeText(getApplicationContext(), "Erro ao remover o favorito",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         // Button 3 - external_link
-        button3 = (Button) findViewById(R.id.button3);
-        button3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d(TAG, "Clicked on button 3 - read the news");
-                try {
-                    Uri webpage = Uri.parse(selectedNews.getLink());
-                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "Para ler a notícia, você precisa ter um navegador instalado", Toast.LENGTH_SHORT).show();
-                }
+        button3 = findViewById(R.id.button3);
+        button3.setOnClickListener(v -> {
+            Log.d(TAG, "Clicked on button 3 - read the news");
+            try {
+                Uri webpage = Uri.parse(selectedNews.getLink());
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "Para ler a notícia, você precisa ter um navegador instalado", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Button 4 - next
-        button4 = (Button) findViewById(R.id.button4);
+        button4 = findViewById(R.id.button4);
         if (checkIfItLast()) {
             button4.setVisibility(View.GONE);
         }
         else {
-            button4.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Log.d(TAG, "Clicked on button 4 - Next");
-                    Intent nextIntent = new Intent(v.getContext(), NewsActivity.class);
-                    nextIntent.putExtra(NewsActivity.SOURCE, source);
-                    if (source == 0) {
-                        nextIntent.putExtra(NewsActivity.NEWS, newsNumber+1);
-                    } else {
-                        nextIntent.putExtra(NewsActivity.NEWS, nextNews);
-                        Log.d(TAG, "next news from source 1 is " + nextNews);
-                    }
-                    startActivity(nextIntent);
+            button4.setOnClickListener(v -> {
+                Log.d(TAG, "Clicked on button 4 - Next");
+                Intent nextIntent = new Intent(v.getContext(), NewsActivity.class);
+                nextIntent.putExtra(NewsActivity.SOURCE, source);
+                if (source == 0) {
+                    nextIntent.putExtra(NewsActivity.NEWS, newsNumber+1);
+                } else {
+                    nextIntent.putExtra(NewsActivity.NEWS, nextNews);
+                    Log.d(TAG, "next news from source 1 is " + nextNews);
                 }
+                startActivity(nextIntent);
             });
         }
     }
