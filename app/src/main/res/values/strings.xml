@@ -8,26 +8,15 @@
     <string name="favorites_desc">Releia as notícias que você salvou</string>
     <string name="logout">Sair</string>
 
-    <string name="back_1">Página Inicial</string>
-    <string name="add_favorite">Adiciona Favorito</string>
-    <string name="remove_favorite">Remove Favorito</string>
+    <string name="add_favorite">Adiciona favorito</string>
     <string name="external_link">Ler notícia</string>
-    <string name="next_1">Próxima >></string>
-
-    <string name="related_movies">Related Videos</string>
-    <string name="grid_view">Grid View</string>
-    <string name="error_fragment">Error Fragment</string>
-    <string name="personal_settings">Personal Settings</string>
-    <string name="watch_trailer_1">Watch trailer</string>
-    <string name="watch_trailer_2">FREE</string>
-    <string name="rent_1">Rent By Day</string>
-    <string name="rent_2">From $1.99</string>
-    <string name="buy_1">Buy and Own</string>
-    <string name="buy_2">AT $9.99</string>
-
-    <string name="movie">Movie</string>
+    <string name="home">Página inicial</string>
+    <string name="next">Avançar &#x3E;&#x3E;&#x3E;</string>
+    <string name="previous">&#x3C;&#x3C;&#x3C; Voltar</string>
+    <string name="remove_favorite">Remove favorito</string>
 
     <!-- Error messages -->
+    <string name="error_fragment">Error Fragment</string>
     <string name="error_fragment_message">An error occurred</string>
     <string name="dismiss_error">Dismiss</string>
 </resources>

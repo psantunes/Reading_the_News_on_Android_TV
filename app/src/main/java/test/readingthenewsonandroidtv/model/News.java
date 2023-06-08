@@ -1,5 +1,11 @@
 package test.readingthenewsonandroidtv.model;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+
 import java.io.Serializable;
 
 /*
@@ -82,6 +88,13 @@ public class News implements Serializable {
 
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    @BindingAdapter("newsImage")
+    public static void loadImage(ImageView view, String imageUrl) {
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .into(view);
     }
 
     @Override

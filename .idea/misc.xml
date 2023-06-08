@@ -3,9 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/drawable/lb_control_button_primary.xml" value="0.2605" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/drawable/lb_control_button_secondary.xml" value="0.2545" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/layout/lb_action_1_line.xml" value="0.59375" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/layout/lb_control_bar.xml" value="0.6533333333333333" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/layout/lb_details_fragment.xml" value="0.6533333333333333" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/layout/lb_details_overview.xml" value="0.6533333333333333" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/layout/lb_guidedactions.xml" value="0.6533333333333333" />
+        <entry key="..\:/Users/paulo/.gradle/caches/transforms-3/43dc556abad5fe501706db94bf709e98/transformed/leanback-1.0.0/res/layout/lb_list_row.xml" value="0.6533333333333333" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ReadingTheNewsOnAndroidTV/app/src/main/res/drawable/default_background.xml" value="0.1355" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ReadingTheNewsOnAndroidTV/app/src/main/res/layout/activity_details.xml" value="0.2361111111111111" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ReadingTheNewsOnAndroidTV/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ReadingTheNewsOnAndroidTV/app/src/main/res/layout/activity_news.xml" value="0.1" />
       </map>
     </option>
   </component>

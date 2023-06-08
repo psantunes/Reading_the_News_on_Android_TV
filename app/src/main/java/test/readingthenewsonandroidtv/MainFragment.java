@@ -21,8 +21,7 @@ public class MainFragment extends GuidedStepSupportFragment {
     public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         String title = getString(R.string.app_name);
         String description = getString(R.string.app_name_desc);
-        Drawable icon = getActivity().getDrawable(R.drawable.newspaper1
-        );
+        Drawable icon = getActivity().getDrawable(R.drawable.newspaper1);
         return new GuidanceStylist.Guidance(title, description, null, icon);
     }
 
@@ -55,9 +54,10 @@ public class MainFragment extends GuidedStepSupportFragment {
         switch ((int) action.getId()){
             case 1:
                 Log.i(TAG, "Option selected: " + getString(R.string.news_slide_mode));
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.NEWS, 0);
-                intent.putExtra(DetailsActivity.SOURCE, 0);
+                Intent intent = new Intent(getActivity(), NewsActivity.class);
+                //Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
+                intent.putExtra(NewsActivity.NEWS, 0);
+                intent.putExtra(NewsActivity.SOURCE, 0);
                 startActivity(intent);
                 break;
             case 2:

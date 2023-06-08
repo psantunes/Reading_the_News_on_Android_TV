@@ -67,7 +67,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
         loadRows();
 
-        setupEventListeners();
+        setOnItemViewClickedListener(new ItemViewClickedListener());
 
     }
 
@@ -83,7 +83,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
     private void loadRows() {
         FavoriteRepository favoriteRepository = new FavoriteRepository(getActivity());
         list = favoriteRepository.getAll();
-        Log.i(TAG, "Favorites tem " + favorites.size() + " elementos");
+        Log.i(TAG, "Favorites tem " + list.size() + " elementos");
 
         ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
@@ -91,7 +91,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
         for (int i = 0; i < list.size(); i++) {
             Log.d(TAG, "onDestroy: " + mBackgroundTimer);
-
             listRowAdapter.add(list.get(i));
         }
 
@@ -116,11 +115,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
     }
 
-    private void setupEventListeners() {
-        setOnItemViewClickedListener(new ItemViewClickedListener());
-        setOnItemViewSelectedListener(new ItemViewSelectedListener());
-    }
-
     private void updateBackground(String uri) {
         int width = mMetrics.widthPixels;
         int height = mMetrics.heightPixels;
@@ -138,64 +132,21 @@ public class FavoriteFragment extends BrowseSupportFragment {
         mBackgroundTimer.cancel();
     }
 
-    private void startBackgroundTimer() {
-        if (null != mBackgroundTimer) {
-            mBackgroundTimer.cancel();
-        }
-        mBackgroundTimer = new Timer();
-        mBackgroundTimer.schedule(new UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY);
-    }
-
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
+            News news = (News) item;
+            Log.d(TAG, "Clicked on " + news.getTitle());
+            Log.d(TAG, "Clicked on " + news.getId());
 
-            if (item instanceof News) {
-                News news = (News) item;
-                Log.d(TAG, "Item: " + news);
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.NEWS, news);
-                intent.putExtra(DetailsActivity.SOURCE, 1);
-                startActivity(intent);
-
-            } else if (item instanceof String) {
-                if (((String) item).contains(getString(R.string.error_fragment))) {
-                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT).show();
-                }
-            }
+            Intent intent = new Intent(getActivity(), NewsActivity.class);
+            intent.putExtra(NewsActivity.NEWS, news.getId());
+            intent.putExtra(NewsActivity.SOURCE, 1);
+            startActivity(intent);
         }
     }
 
-    private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
-        @Override
-        public void onItemSelected(
-                Presenter.ViewHolder itemViewHolder,
-                Object item,
-                RowPresenter.ViewHolder rowViewHolder,
-                Row row) {
-            if (item instanceof News) {
-                mBackgroundUri = ((News) item).getBgImageUrl();
-                startBackgroundTimer();
-            }
-        }
-    }
-
-    private class UpdateBackgroundTask extends TimerTask {
-
-        @Override
-        public void run() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    updateBackground(mBackgroundUri);
-                }
-            });
-        }
-    }
 
     private class GridItemPresenter extends Presenter {
         @Override

@@ -24,6 +24,7 @@ public final class NewsList {
     private static int count = 0;
 
     public static List<News> getNewsList() {
+        Log.d(TAG, "method getNewsList");
         if (list == null) {
             setupNewsOnline();
         }
@@ -31,17 +32,18 @@ public final class NewsList {
     }
 
     public static List<News> setupNewsOnline() {
+        Log.d(TAG, "method setupNewsOnline");
         list = new ArrayList<>();
         try
         {
-            URL jsonUrl = new URL("https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/json_file_example.json");
+            URL jsonUrl = new URL(JSON_URL);
             ObjectMapper mapper = new ObjectMapper();
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
             try {
                 News[] newsListFromJson = mapper.readValue(jsonUrl, News[].class);
                 for (News news : newsListFromJson) {
-                    System.out.println(news);
+                    Log.d(TAG, news.toString());
                     list.add(news);
                     System.out.println("Item adicionado na lista");
                 }

@@ -13,6 +13,7 @@ import test.readingthenewsonandroidtv.model.News;
 import test.readingthenewsonandroidtv.util.Database;
 
 public class FavoriteRepository {
+    private static final String TAG = "FavoriteRepository";
     private final Database database;
 
     public FavoriteRepository(Context context){
@@ -20,6 +21,8 @@ public class FavoriteRepository {
     }
 
     public boolean insert(News news) {
+        Log.d(TAG, "Insert favorite");
+
         ContentValues value = new ContentValues();
         value.put("ID", news.getId());
         value.put("TITLE", news.getTitle());
@@ -36,6 +39,7 @@ public class FavoriteRepository {
             database.close();
             return false;
         }
+        Log.d(TAG, "Favorite saved successfully");
         return true;
     }
 
@@ -55,7 +59,7 @@ public class FavoriteRepository {
             String stringQuery = "SELECT ID, TITLE, ARTICLE, BGIMAGEURL, CARDIMAGEURL, SOURCE, " +
                     "LINK, PHOTOCREDIT, PUBLISHEDAT " +
                     "FROM FAVORITES " +
-                    "ORDER BY PUBLISHEDAT ASC";
+                    "ORDER BY ID ASC";
 
             Cursor cursor = database.getConnection().rawQuery(stringQuery, null);
             cursor.moveToFirst();

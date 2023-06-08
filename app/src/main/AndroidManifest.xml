@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name=".NewsActivity"
             android:exported="false" />
         <activity
             android:name=".FavoriteActivity"
