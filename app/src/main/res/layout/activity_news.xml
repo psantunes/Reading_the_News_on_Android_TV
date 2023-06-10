@@ -48,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:newsImage="@{imageUrl}"
+            android:contentDescription="@{news.title}"
             app:layout_constraintStart_toStartOf="@id/guideline_center"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -149,6 +150,16 @@
             app:layout_constraintStart_toEndOf="@+id/button3"
             app:layout_constraintTop_toTopOf="@+id/menu" />
 
+        <Button
+            android:id="@+id/button5"
+            style="?attr/detailsActionButtonStyle"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stop"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

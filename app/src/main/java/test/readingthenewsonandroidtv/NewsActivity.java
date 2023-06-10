@@ -1,31 +1,22 @@
 package test.readingthenewsonandroidtv;
 
-import static java.lang.String.valueOf;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.leanback.widget.Action;
-import androidx.leanback.widget.ArrayObjectAdapter;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import test.readingthenewsonandroidtv.dao.FavoriteRepository;
 import test.readingthenewsonandroidtv.databinding.ActivityNewsBinding;
@@ -51,7 +42,8 @@ public class NewsActivity extends FragmentActivity {
     private Button button2;
     private Button button3;
     private Button button4;
-
+    private Button button5;
+    private Timer timer;
     private ActivityNewsBinding binding;
 
     @Override
@@ -83,27 +75,13 @@ public class NewsActivity extends FragmentActivity {
         binding.setImageUrl(selectedNews.getBgImageUrl());
         binding.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
 
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-        button4 = findViewById(R.id.button4);
-        if (mode == Mode.Navigation) {
-            if (source == 1) {
-                button2.setText(getString(R.string.remove_favorite));
-            }
-            buttonFunctions();
-        } else {
-            View menu = findViewById(R.id.menu);
-            menu.setVisibility(View.GONE);
-            button1.setVisibility(View.GONE);
-            button1.setVisibility(View.GONE);
-            button2.setVisibility(View.GONE);
-            button3.setVisibility(View.GONE);
-            button4.setVisibility(View.GONE);
-        }
-
+        verifyModeAndLoadNavigationButtons();
         view = binding.getRoot();
         setContentView(view);
+
+        if (mode == Mode.Kyosk) {
+            counter();
+        }
     }
 
     // call NewsList. thread is used to delay application until list is load
@@ -161,7 +139,30 @@ public class NewsActivity extends FragmentActivity {
         }
     }
 
-    public void buttonFunctions() {
+    public void verifyModeAndLoadNavigationButtons() {
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+        button4 = findViewById(R.id.button4);
+        button5 = findViewById(R.id.button5);
+
+        if (mode == Mode.Navigation) {
+            if (source == 1) {
+                button2.setText(getString(R.string.remove_favorite));
+            }
+            button5.setVisibility(View.GONE);
+            navButtons();
+        } else {
+            button1.setVisibility(View.GONE);
+            button1.setVisibility(View.GONE);
+            button2.setVisibility(View.GONE);
+            button3.setVisibility(View.GONE);
+            button4.setVisibility(View.GONE);
+            kyoskButton();
+        }
+    }
+
+    public void navButtons() {
         Log.d(TAG, "method buttonFunctions");
 
         // Button 1 - previous
@@ -221,6 +222,7 @@ public class NewsActivity extends FragmentActivity {
                 Log.d(TAG, "Clicked on button 4 - Next");
                 Intent nextIntent = new Intent(v.getContext(), NewsActivity.class);
                 nextIntent.putExtra(NewsActivity.SOURCE, source);
+                nextIntent.putExtra(NewsActivity.MODE, Mode.Navigation);
                 if (source == 0) {
                     nextIntent.putExtra(NewsActivity.NEWS, newsNumber+1);
                 } else {
@@ -230,5 +232,35 @@ public class NewsActivity extends FragmentActivity {
                 startActivity(nextIntent);
             });
         }
+    }
+
+    public void kyoskButton() {
+        // Button 1 - previous
+        button5.setOnClickListener(v -> {
+            timer.cancel();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    public void counter() {
+        Log.d(TAG, "start the 12 seconds counter");
+        int delay = 12000;
+        int interval = 12000;
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                Log.d(TAG, "load the next news after 10 seconds");
+                Intent nextIntent = new Intent(getApplicationContext(), NewsActivity.class);
+                nextIntent.putExtra(NewsActivity.MODE, Mode.Kyosk);
+                nextIntent.putExtra(NewsActivity.SOURCE, source);
+                if (checkIfItLast()) {
+                    nextIntent.putExtra(NewsActivity.NEWS, 0);
+                } else {
+                    nextIntent.putExtra(NewsActivity.NEWS, newsNumber + 1);
+                }
+                startActivity(nextIntent);
+            }
+        }, delay, interval);
     }
 }
