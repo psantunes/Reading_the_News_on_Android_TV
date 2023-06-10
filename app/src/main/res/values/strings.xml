@@ -11,10 +11,10 @@
     <string name="logout">Sair</string>
 
     <string name="add_favorite">Adiciona favorito</string>
-    <string name="external_link">Ler notícia</string>
+    <string name="external_link">Ler a notícia</string>
     <string name="home">Página inicial</string>
-    <string name="next">Avançar &#x3E;&#x3E;&#x3E;</string>
-    <string name="previous">&#x3C;&#x3C;&#x3C; Voltar</string>
+    <string name="next">Próxima notícia</string>
+    <string name="previous">Voltar</string>
     <string name="stop">Parar</string>
     <string name="remove_favorite">Remove favorito</string>
 
