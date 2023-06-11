@@ -126,7 +126,6 @@ public class NewsActivity extends FragmentActivity {
     private void initializeBackground(News news) {
         Glide.with(this)
                 .asBitmap()
-                .centerCrop()
                 .load(news.getBgImageUrl())
                 .error(R.drawable.default_background)
                 .into((ImageView) view);
@@ -259,11 +258,9 @@ public class NewsActivity extends FragmentActivity {
     public void counter() {
         Log.d(TAG, "start the 12 seconds counter");
         int delay = 12000;
-        int interval = 12000;
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timer.schedule(new TimerTask() {
             public void run() {
-                Log.d(TAG, "load the next news after 10 seconds");
                 Intent nextIntent = new Intent(getApplicationContext(), NewsActivity.class);
                 nextIntent.putExtra(NewsActivity.MODE, Mode.kyosk);
                 nextIntent.putExtra(NewsActivity.SOURCE, source);
@@ -274,6 +271,6 @@ public class NewsActivity extends FragmentActivity {
                 }
                 startActivity(nextIntent);
             }
-        }, delay, interval);
+        }, delay);
     }
 }
