@@ -65,7 +65,7 @@ public class MainFragment extends GuidedStepSupportFragment {
                 Intent intent = new Intent(getActivity(), NewsActivity.class);
                 intent.putExtra(NewsActivity.NEWS, 0);
                 intent.putExtra(NewsActivity.SOURCE, 0);
-                intent.putExtra(NewsActivity.MODE, Mode.Navigation);
+                intent.putExtra(NewsActivity.MODE, Mode.navigation);
                 startActivity(intent);
                 break;
             case 2:
@@ -73,7 +73,7 @@ public class MainFragment extends GuidedStepSupportFragment {
                 Intent intent2 = new Intent(getActivity(), NewsActivity.class);
                 intent2.putExtra(NewsActivity.NEWS, 0);
                 intent2.putExtra(NewsActivity.SOURCE, 0);
-                intent2.putExtra(NewsActivity.MODE, Mode.Kyosk);
+                intent2.putExtra(NewsActivity.MODE, Mode.kyosk);
                 startActivity(intent2);
                 break;
             case 3:

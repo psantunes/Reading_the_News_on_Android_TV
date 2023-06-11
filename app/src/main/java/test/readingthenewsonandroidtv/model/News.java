@@ -22,6 +22,7 @@ public class News implements Serializable {
     private String link;
     private String photoCredit;
     private String publishedAt;
+    private String orientation;
 
     public News() {
     }
@@ -90,6 +91,14 @@ public class News implements Serializable {
         this.publishedAt = publishedAt;
     }
 
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
     @BindingAdapter("newsImage")
     public static void loadImage(ImageView view, String imageUrl) {
         Glide.with(view.getContext())
@@ -108,6 +117,7 @@ public class News implements Serializable {
                 ", source='" + source + '\'' +
                 ", link='" + link + '\'' +
                 ", photoCredit='" + photoCredit + '\'' +
+                ", orientation='" + orientation + '\'' +
                 '}';
     }
 }

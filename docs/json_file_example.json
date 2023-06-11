@@ -33,7 +33,7 @@
 		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/ifrs_g.jpg",
 		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/ifrs_p.jpg",
 		"photoCredit": "Comunicação IFRS Canoas",
-		"orientation": "vertical"
+		"orientation": "horizontal"
 	},
 	{
 		"id": "4",
@@ -45,6 +45,6 @@
 		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/imperadores_g.jpg",
 		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/imperadores_p.jpg",
 		"photoCredit": "Luiza Castro/Sul21",
-		"orientation": "horizontal"
+		"orientation": "vertical"
 	}
 ]

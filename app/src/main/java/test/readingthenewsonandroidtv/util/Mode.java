@@ -1,5 +1,5 @@
 package test.readingthenewsonandroidtv.util;
 
 public enum Mode {
-    Navigation, Kyosk
+    navigation, kyosk
 }

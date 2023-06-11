@@ -33,6 +33,7 @@ public class FavoriteRepository {
         value.put("LINK", news.getLink());
         value.put("PHOTOCREDIT", news.getPhotoCredit());
         value.put("PUBLISHEDAT", news.getPublishedAt());
+        value.put("ORIENTATION", news.getOrientation());
 
         long result = database.getConnection().insert("FAVORITES", null, value);
         if (result ==-1) {
@@ -57,7 +58,7 @@ public class FavoriteRepository {
 
         try {
             String stringQuery = "SELECT ID, TITLE, ARTICLE, BGIMAGEURL, CARDIMAGEURL, SOURCE, " +
-                    "LINK, PHOTOCREDIT, PUBLISHEDAT " +
+                    "LINK, PHOTOCREDIT, PUBLISHEDAT, ORIENTATION " +
                     "FROM FAVORITES " +
                     "ORDER BY ID ASC";
 
@@ -74,6 +75,7 @@ public class FavoriteRepository {
                 news.setLink(cursor.getString(cursor.getColumnIndex("LINK")));
                 news.setPhotoCredit(cursor.getString(cursor.getColumnIndex("PHOTOCREDIT")));
                 news.setPublishedAt(cursor.getString(cursor.getColumnIndex("PUBLISHEDAT")));
+                news.setOrientation(cursor.getString(cursor.getColumnIndex("ORIENTATION")));
                 newsList.add(news);
                 cursor.moveToNext();
             }

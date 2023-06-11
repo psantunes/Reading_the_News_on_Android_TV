@@ -16,7 +16,6 @@ import androidx.leanback.widget.HeaderItem;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.OnItemViewClickedListener;
-import androidx.leanback.widget.OnItemViewSelectedListener;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
@@ -39,6 +38,7 @@ import java.util.TimerTask;
 
 import test.readingthenewsonandroidtv.dao.FavoriteRepository;
 import test.readingthenewsonandroidtv.model.News;
+import test.readingthenewsonandroidtv.util.Mode;
 
 public class FavoriteFragment extends BrowseSupportFragment {
     private static final String TAG = "FavoriteFragment";
@@ -143,6 +143,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
             Intent intent = new Intent(getActivity(), NewsActivity.class);
             intent.putExtra(NewsActivity.NEWS, news.getId());
             intent.putExtra(NewsActivity.SOURCE, 1);
+            intent.putExtra(NewsActivity.MODE, Mode.navigation);
             startActivity(intent);
         }
     }

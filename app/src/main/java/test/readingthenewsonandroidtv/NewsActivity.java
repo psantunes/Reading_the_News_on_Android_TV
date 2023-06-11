@@ -6,12 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
+
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import test.readingthenewsonandroidtv.dao.FavoriteRepository;
-import test.readingthenewsonandroidtv.databinding.ActivityNewsBinding;
+import test.readingthenewsonandroidtv.databinding.ActivityNewsHBinding;
+import test.readingthenewsonandroidtv.databinding.ActivityNewsVBinding;
 import test.readingthenewsonandroidtv.model.News;
 import test.readingthenewsonandroidtv.model.NewsList;
 import test.readingthenewsonandroidtv.util.Mode;
@@ -44,13 +47,11 @@ public class NewsActivity extends FragmentActivity {
     private Button button4;
     private Button button5;
     private Timer timer;
-    private ActivityNewsBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "method onCreate");
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_news);
 
         source = (int) getIntent().getSerializableExtra(NewsActivity.SOURCE);
         mode = (Mode) getIntent().getSerializableExtra(NewsActivity.MODE);
@@ -71,15 +72,27 @@ public class NewsActivity extends FragmentActivity {
             }
         }
         selectedNews = list.get(newsNumber);
-        binding.setNews(selectedNews);
-        binding.setImageUrl(selectedNews.getBgImageUrl());
-        binding.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
+
+        if (selectedNews.getOrientation().equals("vertical")) {
+            Log.d(TAG, "Layout with vertical picture");
+            ActivityNewsVBinding bindingV = DataBindingUtil.setContentView(this, R.layout.activity_news_v);
+            bindingV.setNews(selectedNews);
+            bindingV.setImageUrl(selectedNews.getBgImageUrl());
+            bindingV.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
+            view = bindingV.getRoot();
+        } else {
+            Log.d(TAG, "Layout with horizontal picture");
+            ActivityNewsHBinding bindingH = DataBindingUtil.setContentView(this, R.layout.activity_news_h);
+            bindingH.setNews(selectedNews);
+            bindingH.setImageUrl(selectedNews.getBgImageUrl());
+            bindingH.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
+            view = bindingH.getRoot();
+        }
 
         verifyModeAndLoadNavigationButtons();
-        view = binding.getRoot();
         setContentView(view);
 
-        if (mode == Mode.Kyosk) {
+        if (mode == Mode.kyosk) {
             counter();
         }
     }
@@ -134,7 +147,7 @@ public class NewsActivity extends FragmentActivity {
         } else {
             // get next news (used only on list of favorites)
             nextNews = list.get(pos+1).getId();
-            Log.d(TAG, "nextNews =" + nextNews);
+            Log.d(TAG, "Id of nextNews is " + nextNews);
             return false;
         }
     }
@@ -146,7 +159,7 @@ public class NewsActivity extends FragmentActivity {
         button4 = findViewById(R.id.button4);
         button5 = findViewById(R.id.button5);
 
-        if (mode == Mode.Navigation) {
+        if (mode == Mode.navigation) {
             if (source == 1) {
                 button2.setText(getString(R.string.remove_favorite));
             }
@@ -222,7 +235,7 @@ public class NewsActivity extends FragmentActivity {
                 Log.d(TAG, "Clicked on button 4 - Next");
                 Intent nextIntent = new Intent(v.getContext(), NewsActivity.class);
                 nextIntent.putExtra(NewsActivity.SOURCE, source);
-                nextIntent.putExtra(NewsActivity.MODE, Mode.Navigation);
+                nextIntent.putExtra(NewsActivity.MODE, Mode.navigation);
                 if (source == 0) {
                     nextIntent.putExtra(NewsActivity.NEWS, newsNumber+1);
                 } else {
@@ -252,7 +265,7 @@ public class NewsActivity extends FragmentActivity {
             public void run() {
                 Log.d(TAG, "load the next news after 10 seconds");
                 Intent nextIntent = new Intent(getApplicationContext(), NewsActivity.class);
-                nextIntent.putExtra(NewsActivity.MODE, Mode.Kyosk);
+                nextIntent.putExtra(NewsActivity.MODE, Mode.kyosk);
                 nextIntent.putExtra(NewsActivity.SOURCE, source);
                 if (checkIfItLast()) {
                     nextIntent.putExtra(NewsActivity.NEWS, 0);
