@@ -1,14 +1,15 @@
 [
 	{
-	"id": "1",
-	"title": "Número de usuários da passagem escolar cai 77% em Porto Alegre",
-	"article": "O número de beneficiários do transporte escolar na Capital caiu 77% entre 2019 e 2022. Em 2021, o prefeito Sebastião Melo sancionou o projeto que reduziu as isenções nos ônibus de Porto Alegre. Para o vereador Giovani Culau, queda também pode estar associada também à evasão escolar.",
-	"source": "Matinal Jornalismo",
-	"link": "https://www.matinaljornalismo.com.br/matinal/newsletter/apos-restricoes-numero-de-usuarios-da-passagem-escolar-cai-77-em-porto-alegre/",
-	"publishedAt": "2022-05-05",
-	"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/tri_g.jpg",
-	"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/tri_p.jpg",
-	"photoCredit": "Cesar Lopes/PMPA"
+		"id": "1",
+		"title": "Número de usuários da passagem escolar cai 77% em Porto Alegre",
+		"article": "O número de beneficiários do transporte escolar na Capital caiu 77% entre 2019 e 2022. Em 2021, o prefeito Sebastião Melo sancionou o projeto que reduziu as isenções nos ônibus de Porto Alegre. Para o vereador Giovani Culau, queda também pode estar associada também à evasão escolar.",
+		"source": "Matinal Jornalismo",
+		"link": "https://www.matinaljornalismo.com.br/matinal/newsletter/apos-restricoes-numero-de-usuarios-da-passagem-escolar-cai-77-em-porto-alegre/",
+		"publishedAt": "2022-05-05",
+		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/tri_g.jpg",
+		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/tri_p.jpg",
+		"photoCredit": "Cesar Lopes/PMPA",
+		"orientation": "vertical"
 	},
 	{
 		"id": "2",
@@ -19,7 +20,8 @@
 		"publishedAt": "2022-04-10",
 		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/musica_g.jpg",
 		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/musica_p.jpg",
-		"photoCredit": "Tomaz Silva/Agência Brasil"
+		"photoCredit": "Tomaz Silva/Agência Brasil",
+		"orientation": "horizontal"
 	},
 	{
 		"id": "3",
@@ -30,17 +32,19 @@
 		"publishedAt": "2023-05-04",
 		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/ifrs_g.jpg",
 		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/ifrs_p.jpg",
-		"photoCredit": "Comunicação IFRS Canoas"
+		"photoCredit": "Comunicação IFRS Canoas",
+		"orientation": "vertical"
 	},
 	{
 		"id": "4",
 		"title": "Prefeitura de Porto Alegre nega que irá leiloar terrenos onde estão quadras de escolas de samba",
 		"article": "Secretário municipal de Administração e Patrimônio, André Barbosa, negou que Prefeitura planeje leiloar os terrenos onde estão localizadas as quadras das escolas de samba Praiana, Imperadores do Samba e Banda Saldanha, na Av. Padre Cacique, ao lado do Estádio Beira-Rio. \"Se a decisão for vender, nós vamos dialogar com todas as escolas de samba e buscar alternativas, para não deixar ninguém na mão\", afirmou.",
 		"source": "Sul21",
-		"link": "https://www.correiodopovo.com.br/esportes/inter/inter-vence-goi%C3%A1s-fora-de-casa-e-segue-no-compasso-dos-l%C3%ADderes-do-brasileir%C3%A3o-1.840692",
+		"link": "https://sul21.com.br/noticias/geral/2023/05/prefeitura-nega-que-ira-leiloar-terrenos-onde-estao-quadras-de-escolas-de-samba/",
 		"publishedAt": "2023-05-06",
 		"bgImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/imperadores_g.jpg",
 		"cardImageUrl": "https://raw.githubusercontent.com/psantunes/Reading_the_News_on_Android_TV/main/docs/imperadores_p.jpg",
-		"photoCredit": "Luiza Castro/Sul21"
+		"photoCredit": "Luiza Castro/Sul21",
+		"orientation": "horizontal"
 	}
 ]
