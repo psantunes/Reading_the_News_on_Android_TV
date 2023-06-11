@@ -47,7 +47,7 @@
             android:id="@+id/photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:newsImage="@{imageUrl}"
+            android:scaleType="fitStart"            app:newsImage="@{imageUrl}"
             android:contentDescription="@{news.title}"
             app:layout_constraintStart_toStartOf="@id/guideline_center"
             app:layout_constraintTop_toTopOf="parent" />
