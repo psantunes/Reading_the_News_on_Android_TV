@@ -7,6 +7,8 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.leanback.app.ErrorSupportFragment;
 
+import test.readingthenewsonandroidtv.util.Setup;
+
 /*
  * This class demonstrates how to extend ErrorSupportFragment.
  */
@@ -18,7 +20,7 @@ public class ErrorFragment extends ErrorSupportFragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setTitle(getResources().getString(R.string.app_name));
+        setTitle(Setup.APP_NAME);
     }
 
     void setErrorContent() {
@@ -31,7 +33,7 @@ public class ErrorFragment extends ErrorSupportFragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
-                        getFragmentManager().beginTransaction().remove(ErrorFragment.this).commit();
+                        getParentFragmentManager().beginTransaction().remove(ErrorFragment.this).commit();
                     }
                 });
     }

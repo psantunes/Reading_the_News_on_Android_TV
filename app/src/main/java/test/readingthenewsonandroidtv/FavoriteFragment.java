@@ -33,8 +33,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import test.readingthenewsonandroidtv.dao.FavoriteRepository;
 import test.readingthenewsonandroidtv.model.News;
@@ -43,23 +41,18 @@ import test.readingthenewsonandroidtv.util.Mode;
 public class FavoriteFragment extends BrowseSupportFragment {
     private static final String TAG = "FavoriteFragment";
 
-    private static final int BACKGROUND_UPDATE_DELAY = 300;
     private static final int GRID_ITEM_WIDTH = 200;
     private static final int GRID_ITEM_HEIGHT = 200;
 
     private final Handler mHandler = new Handler();
-    private Drawable mDefaultBackground;
     private DisplayMetrics mMetrics;
-    private Timer mBackgroundTimer;
-    private String mBackgroundUri;
     private BackgroundManager mBackgroundManager;
-    private List<Integer> favorites;
     private List<News> list;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
-        super.onActivityCreated(savedInstanceState);
+        super.onCreate(savedInstanceState);
+        setHeadersState(HEADERS_DISABLED);
 
         prepareBackgroundManager();
 
@@ -69,15 +62,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != mBackgroundTimer) {
-            Log.d(TAG, "onDestroy: " + mBackgroundTimer);
-            mBackgroundTimer.cancel();
-        }
     }
 
     private void loadRows() {
@@ -90,7 +74,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
 
         for (int i = 0; i < list.size(); i++) {
-            Log.d(TAG, "onDestroy: " + mBackgroundTimer);
             listRowAdapter.add(list.get(i));
         }
 
@@ -104,7 +87,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
 
-        mDefaultBackground = ContextCompat.getDrawable(getContext(), R.drawable.default_background);
+        Drawable mDefaultBackground = ContextCompat.getDrawable(getContext(), R.drawable.default_background);
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
@@ -115,31 +98,12 @@ public class FavoriteFragment extends BrowseSupportFragment {
 
     }
 
-    private void updateBackground(String uri) {
-        int width = mMetrics.widthPixels;
-        int height = mMetrics.heightPixels;
-        Glide.with(getActivity())
-                .load(uri)
-                .centerCrop()
-                .error(mDefaultBackground)
-                .into(new SimpleTarget<Drawable>(width, height) {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable drawable,
-                                                @Nullable Transition<? super Drawable> transition) {
-                        mBackgroundManager.setDrawable(drawable);
-                    }
-                });
-        mBackgroundTimer.cancel();
-    }
-
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
             News news = (News) item;
             Log.d(TAG, "Clicked on " + news.getTitle());
-            Log.d(TAG, "Clicked on " + news.getId());
-
             Intent intent = new Intent(getActivity(), NewsActivity.class);
             intent.putExtra(NewsActivity.NEWS, news.getId());
             intent.putExtra(NewsActivity.SOURCE, 1);

@@ -14,15 +14,16 @@ import java.util.List;
 import test.readingthenewsonandroidtv.model.News;
 import test.readingthenewsonandroidtv.model.NewsList;
 import test.readingthenewsonandroidtv.util.Mode;
+import test.readingthenewsonandroidtv.util.Setup;
 
 public class MainFragment extends GuidedStepSupportFragment {
     private static final String TAG = "MainFragment";
 
     @Override
     public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
-        String title = getString(R.string.app_name);
-        String description = getString(R.string.app_name_desc);
-        Drawable icon = getActivity().getDrawable(R.drawable.newspaper1);
+        String title = Setup.APP_NAME;
+        String description = Setup.APP_DESCRIPTION;
+        Drawable icon = getActivity().getDrawable(Setup.LOGO);
         return new GuidanceStylist.Guidance(title, description, null, icon);
     }
 

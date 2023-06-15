@@ -1,7 +1,4 @@
 <resources>
-    <string name="app_name">Reading The News On Android TV</string>
-    <string name="app_name_desc">An experimental app made by @PSAntunes</string>
-
     <string name="news_nav_mode">Notícias do Dia</string>
     <string name="news_nav_mode_desc">Leia as notícias que selecionamos para você hoje</string>
     <string name="news_kyosk_mode">Notícias em Modo Quiosque</string>
