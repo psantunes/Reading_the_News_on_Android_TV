@@ -20,8 +20,8 @@ import test.readingthenewsonandroidtv.model.News;
 public class CardPresenter extends Presenter {
     private static final String TAG = "CardPresenter";
 
-    private static final int CARD_WIDTH = 320;
-    private static final int CARD_HEIGHT = 180;
+    private static final int IMG_WIDTH = 400;
+    private static final int IMG_HEIGHT = 225;
     private static int sSelectedBackgroundColor;
     private static int sDefaultBackgroundColor;
     private Drawable mDefaultCardImage;
@@ -73,7 +73,7 @@ public class CardPresenter extends Presenter {
         if (news.getCardImageUrl() != null) {
             cardView.setTitleText(news.getTitle());
             cardView.setContentText(news.getPublishedAt());
-            cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+            cardView.setMainImageDimensions(IMG_WIDTH, IMG_HEIGHT);
             Glide.with(viewHolder.view.getContext())
                     .load(news.getCardImageUrl())
                     .centerCrop()

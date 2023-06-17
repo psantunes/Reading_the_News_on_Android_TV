@@ -40,23 +40,12 @@ import test.readingthenewsonandroidtv.util.Mode;
 
 public class FavoriteFragment extends BrowseSupportFragment {
     private static final String TAG = "FavoriteFragment";
-
-    private static final int GRID_ITEM_WIDTH = 200;
-    private static final int GRID_ITEM_HEIGHT = 200;
-
-    private final Handler mHandler = new Handler();
-    private DisplayMetrics mMetrics;
-    private BackgroundManager mBackgroundManager;
     private List<News> list;
 
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setHeadersState(HEADERS_DISABLED);
-
-        prepareBackgroundManager();
-
-        setupUIElements();
 
         loadRows();
 
@@ -82,22 +71,6 @@ public class FavoriteFragment extends BrowseSupportFragment {
         setAdapter(rowsAdapter);
     }
 
-    private void prepareBackgroundManager() {
-
-        mBackgroundManager = BackgroundManager.getInstance(getActivity());
-        mBackgroundManager.attach(getActivity().getWindow());
-
-        Drawable mDefaultBackground = ContextCompat.getDrawable(getContext(), R.drawable.default_background);
-        mMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
-    }
-
-    private void setupUIElements() {
-        // set fastLane (or headers) background color
-        setBrandColor(ContextCompat.getColor(getContext(), R.color.fastlane_background));
-
-    }
-
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
@@ -117,11 +90,10 @@ public class FavoriteFragment extends BrowseSupportFragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent) {
             TextView view = new TextView(parent.getContext());
-            view.setLayoutParams(new ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT));
             view.setFocusable(true);
             view.setFocusableInTouchMode(true);
             view.setBackgroundColor(
-                    ContextCompat.getColor(getContext(), R.color.default_background));
+                    ContextCompat.getColor(getContext(), R.color.fastlane_background));
             view.setTextColor(Color.WHITE);
             view.setGravity(Gravity.CENTER);
             return new ViewHolder(view);
