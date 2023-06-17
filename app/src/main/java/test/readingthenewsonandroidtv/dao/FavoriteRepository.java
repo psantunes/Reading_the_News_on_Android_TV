@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class FavoriteRepository {
         value.put("SOURCE", news.getSource());
         value.put("LINK", news.getLink());
         value.put("PHOTOCREDIT", news.getPhotoCredit());
-        value.put("PUBLISHEDAT", news.getPublishedAt());
+        value.put("PUBLISHEDAT", String.valueOf(news.getPublishedAt()));
         value.put("ORIENTATION", news.getOrientation());
 
         long result = database.getConnection().insert("FAVORITES", null, value);
@@ -74,7 +76,8 @@ public class FavoriteRepository {
                 news.setSource(cursor.getString(cursor.getColumnIndex("SOURCE")));
                 news.setLink(cursor.getString(cursor.getColumnIndex("LINK")));
                 news.setPhotoCredit(cursor.getString(cursor.getColumnIndex("PHOTOCREDIT")));
-                news.setPublishedAt(cursor.getString(cursor.getColumnIndex("PUBLISHEDAT")));
+                LocalDate date = LocalDate.parse(cursor.getString(cursor.getColumnIndex("PUBLISHEDAT")), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                news.setPublishedAt(date);
                 news.setOrientation(cursor.getString(cursor.getColumnIndex("ORIENTATION")));
                 newsList.add(news);
                 cursor.moveToNext();
@@ -89,14 +92,5 @@ public class FavoriteRepository {
             Log.i("Exception", e.getMessage());
             return null;
         }
-    }
-
-    public boolean checkIfIsFavorite(int id){
-        Cursor cursor =  database.getConnection().rawQuery("SELECT 1 FROM FAVORITES WHERE ID = " + id, null);
-        boolean isFavorite = (cursor.getCount() > 0);
-        cursor.close();
-        database.close();
-
-        return isFavorite;
     }
 }

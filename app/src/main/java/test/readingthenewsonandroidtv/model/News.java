@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /*
  * Movie class represents video entity with title, description, image thumbs and video url.
@@ -21,7 +22,7 @@ public class News implements Serializable {
     private String source;
     private String link;
     private String photoCredit;
-    private String publishedAt;
+    private LocalDate publishedAt;
     private String orientation;
 
     public News() {
@@ -83,11 +84,11 @@ public class News implements Serializable {
 
     public void setPhotoCredit(String photoCredit) { this.photoCredit = photoCredit; }
 
-    public String getPublishedAt() {
+    public LocalDate getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(LocalDate publishedAt) {
         this.publishedAt = publishedAt;
     }
 
