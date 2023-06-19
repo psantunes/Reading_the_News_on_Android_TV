@@ -11,8 +11,6 @@ import android.util.Log;
 
 import java.util.List;
 
-import test.readingthenewsonandroidtv.model.News;
-import test.readingthenewsonandroidtv.model.NewsList;
 import test.readingthenewsonandroidtv.util.Mode;
 import test.readingthenewsonandroidtv.util.Setup;
 

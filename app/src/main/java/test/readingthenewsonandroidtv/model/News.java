@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-/*
- * Movie class represents video entity with title, description, image thumbs and video url.
+/**
+ * The class News serializes the news received via external file or database
  */
 public class News implements Serializable {
     static final long serialVersionUID = 727566175075960653L;
