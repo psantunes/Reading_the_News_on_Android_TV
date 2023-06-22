@@ -7,7 +7,7 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * The class News serializes the news received via external file or database
@@ -22,7 +22,7 @@ public class News implements Serializable {
     private String source;
     private String link;
     private String photoCredit;
-    private LocalDate publishedAt;
+    private Date publishedAt;
     private String orientation;
 
     public News() {
@@ -84,11 +84,11 @@ public class News implements Serializable {
 
     public void setPhotoCredit(String photoCredit) { this.photoCredit = photoCredit; }
 
-    public LocalDate getPublishedAt() {
+    public Date getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(LocalDate publishedAt) {
+    public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
     }
 

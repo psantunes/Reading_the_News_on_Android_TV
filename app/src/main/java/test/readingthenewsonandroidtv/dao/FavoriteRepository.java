@@ -6,9 +6,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import test.readingthenewsonandroidtv.model.News;
@@ -57,7 +58,6 @@ public class FavoriteRepository {
     @SuppressLint("Range")
     public List<News> getAll(){
         List<News> newsList = new ArrayList<>();
-
         try {
             String stringQuery = "SELECT ID, TITLE, ARTICLE, BGIMAGEURL, CARDIMAGEURL, SOURCE, " +
                     "LINK, PHOTOCREDIT, PUBLISHEDAT, ORIENTATION " +
@@ -76,7 +76,8 @@ public class FavoriteRepository {
                 news.setSource(cursor.getString(cursor.getColumnIndex("SOURCE")));
                 news.setLink(cursor.getString(cursor.getColumnIndex("LINK")));
                 news.setPhotoCredit(cursor.getString(cursor.getColumnIndex("PHOTOCREDIT")));
-                LocalDate date = LocalDate.parse(cursor.getString(cursor.getColumnIndex("PUBLISHEDAT")), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                // DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date(cursor.getLong(cursor.getColumnIndex("PUBLISHEDAT")));
                 news.setPublishedAt(date);
                 news.setOrientation(cursor.getString(cursor.getColumnIndex("ORIENTATION")));
                 newsList.add(news);

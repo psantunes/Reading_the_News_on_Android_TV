@@ -4,10 +4,10 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +34,11 @@ public final class NewsList {
         list = new ArrayList<>();
         try
         {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             URL jsonUrl = new URL(Setup.JSON_URL);
             ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
+            mapper.setDateFormat(formatter);
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
             try {
                 News[] newsListFromJson = mapper.readValue(jsonUrl, News[].class);
                 for (News news : newsListFromJson) {

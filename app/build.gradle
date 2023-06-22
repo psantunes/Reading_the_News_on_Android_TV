@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "test.readingthenewsonandroidtv"
-        minSdk 26
+        minSdk 25
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -44,6 +44,6 @@ dependencies {
     implementation 'org.jetbrains:annotations:15.0'
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
     implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
 }

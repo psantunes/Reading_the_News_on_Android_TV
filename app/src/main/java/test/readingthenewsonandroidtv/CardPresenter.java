@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import test.readingthenewsonandroidtv.model.News;
 
@@ -76,9 +78,9 @@ public class CardPresenter extends Presenter {
         if (news.getCardImageUrl() != null) {
             cardView.setTitleText(news.getTitle());
 
-            LocalDate date = news.getPublishedAt();
-            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String text = date.format(formatters);
+            Date date = news.getPublishedAt();
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String text = formatter.format(date);
 
             cardView.setContentText(text);
             cardView.setMainImageDimensions(IMG_WIDTH, IMG_HEIGHT);
