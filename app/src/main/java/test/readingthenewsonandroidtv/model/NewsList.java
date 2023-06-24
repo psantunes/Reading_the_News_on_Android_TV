@@ -44,9 +44,6 @@ public final class NewsList {
                 for (News news : newsListFromJson) {
                     Log.d(TAG, news.toString());
                     list.add(news);
-
-                    Log.d(TAG, news.getPublishedAt().toString());
-
                 }
             } catch (IOException io) {
                 Log.i("Exception", io.getMessage());
