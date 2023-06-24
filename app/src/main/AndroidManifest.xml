@@ -15,20 +15,18 @@
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:banner="@drawable/app_logo"
+        android:icon="@mipmap/newspaper"
+        android:logo="@mipmap/newspaper"
         android:label="Reading The News On Android TV"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadingTheNewsOnAndroidTV">
         <activity
             android:name=".MainActivity"
-            android:banner="@drawable/app_icon_your_company"
             android:exported="true"
-            android:icon="@drawable/app_icon_your_company"
-            android:logo="@drawable/app_icon_your_company"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
