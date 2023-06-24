@@ -76,11 +76,14 @@ public class CardPresenter extends Presenter {
 
         Log.d(TAG, "onBindViewHolder");
         if (news.getCardImageUrl() != null) {
-            cardView.setTitleText(news.getTitle());
 
-            Date date = news.getPublishedAt();
+            Log.d(TAG, news.toString());
+
+            cardView.setTitleText(news.getTitle());
+            Log.d(TAG, "onBindViewHolder");
+
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String text = formatter.format(date);
+            String text = formatter.format(news.getPublishedAt());
 
             cardView.setContentText(text);
             cardView.setMainImageDimensions(IMG_WIDTH, IMG_HEIGHT);
