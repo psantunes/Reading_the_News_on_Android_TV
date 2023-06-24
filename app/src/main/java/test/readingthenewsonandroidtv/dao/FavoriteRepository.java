@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import test.readingthenewsonandroidtv.model.News;
 import test.readingthenewsonandroidtv.util.Database;
@@ -18,6 +19,7 @@ import test.readingthenewsonandroidtv.util.Database;
 public class FavoriteRepository {
     private static final String TAG = "FavoriteRepository";
     private final Database database;
+    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public FavoriteRepository(Context context){
         database = new Database(context);
@@ -35,7 +37,7 @@ public class FavoriteRepository {
         value.put("SOURCE", news.getSource());
         value.put("LINK", news.getLink());
         value.put("PHOTOCREDIT", news.getPhotoCredit());
-        value.put("PUBLISHEDAT", String.valueOf(news.getPublishedAt()));
+        value.put("PUBLISHEDAT", formatter.format(news.getPublishedAt()));
         value.put("ORIENTATION", news.getOrientation());
 
         long result = database.getConnection().insert("FAVORITES", null, value);
@@ -76,9 +78,8 @@ public class FavoriteRepository {
                 news.setSource(cursor.getString(cursor.getColumnIndex("SOURCE")));
                 news.setLink(cursor.getString(cursor.getColumnIndex("LINK")));
                 news.setPhotoCredit(cursor.getString(cursor.getColumnIndex("PHOTOCREDIT")));
-                // DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = new Date(cursor.getLong(cursor.getColumnIndex("PUBLISHEDAT")));
-                news.setPublishedAt(date);
+                String publishedAt = cursor.getString(cursor.getColumnIndex("PUBLISHEDAT"));
+                news.setPublishedAt(formatter.parse(publishedAt));
                 news.setOrientation(cursor.getString(cursor.getColumnIndex("ORIENTATION")));
                 newsList.add(news);
                 cursor.moveToNext();

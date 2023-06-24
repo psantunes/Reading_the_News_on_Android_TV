@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE = "READING_THE_NEWS";
-    private static final int VERSION = 3;
+    private static final int VERSION = 4;
 
     public Database(Context context){
         super(context, DATABASE,null, VERSION);
@@ -23,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
                 "SOURCE TEXT NOT NULL," +
                 "LINK TEXT NOT NULL," +
                 "PHOTOCREDIT TEXT NOT NULL," +
-                "PUBLISHEDAT DATE NOT NULL," +
+                "PUBLISHEDAT TEXT NOT NULL," +
                 "ORIENTATION TEXT NOT NULL)";
         db.execSQL(createTable);
     }
