@@ -23,6 +23,13 @@
             app:layout_constraintGuide_percent=".50" />
 
         <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".97" />
+
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +55,7 @@
         <View
             android:id="@+id/menu"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="75dp"
             android:background="@color/lb_guidedactions_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +69,7 @@
             android:fontFamily="sans-serif-black"
             android:text="@{news.title}"
             android:textColor="#ffffff"
-            android:textSize="25sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/guideline_top" />
@@ -75,7 +82,7 @@
             android:fontFamily="sans-serif"
             android:text="@{news.article}"
             android:textColor="#ffffff"
-            android:textSize="19sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="@id/guideline_end" />
@@ -104,68 +111,63 @@
             android:textDirection="locale"
             android:textAlignment="viewStart"
             android:text="@string/home"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
-            app:layout_constraintTop_toTopOf="@+id/menu" />
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/button2" />
 
         <Button
             android:id="@+id/button2"
             style="?attr/detailsActionButtonStyle"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:text="@string/add_favorite"
             android:drawableStart="@drawable/ic_baseline_star_24"
             android:drawablePadding="12dp"
             android:textDirection="locale"
             android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
             app:layout_constraintEnd_toStartOf="@+id/button3"
-            app:layout_constraintStart_toEndOf="@+id/button1"
-            app:layout_constraintTop_toTopOf="@+id/menu" />
+            app:layout_constraintStart_toEndOf="@+id/button1" />
 
         <Button
             android:id="@+id/button3"
             style="?attr/detailsActionButtonStyle"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:text="@string/external_link"
             android:drawableStart="@drawable/ic_baseline_web_24"
             android:drawablePadding="12dp"
             android:textDirection="locale"
             android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
             app:layout_constraintEnd_toStartOf="@+id/button4"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toTopOf="@+id/menu" />
+            app:layout_constraintStart_toEndOf="@+id/button2" />
 
         <Button
             android:id="@+id/button4"
             style="?attr/detailsActionButtonStyle"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:text="@string/next"
             android:drawableStart="@drawable/ic_baseline_fast_forward_24"
             android:drawablePadding="12dp"
             android:textDirection="locale"
             android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button3"
-            app:layout_constraintTop_toTopOf="@+id/menu" />
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
+            app:layout_constraintStart_toEndOf="@+id/button3" />
 
         <Button
             android:id="@+id/button5"
             style="?attr/detailsActionButtonStyle"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:text="@string/stop"
             android:drawableStart="@drawable/ic_baseline_stop_24"
             android:drawablePadding="12dp"
             android:textDirection="locale"
             android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-            app:layout_constraintTop_toTopOf="@+id/menu" />
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
