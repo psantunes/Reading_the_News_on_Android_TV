@@ -44,9 +44,9 @@ public class CardPresenter extends Presenter {
         Log.d(TAG, "onCreateViewHolder");
 
         sDefaultBackgroundColor =
-                ContextCompat.getColor(parent.getContext(), R.color.default_background);
+                ContextCompat.getColor(parent.getContext(), R.color.first_color);
         sSelectedBackgroundColor =
-                ContextCompat.getColor(parent.getContext(), R.color.selected_background);
+                ContextCompat.getColor(parent.getContext(), R.color.selected_color);
         /*
          * This template uses a default image in res/drawable, but the general case for Android TV
          * will require your resources in xhdpi. For more information, see

@@ -127,7 +127,7 @@ public class NewsActivity extends FragmentActivity {
         Glide.with(this)
                 .asBitmap()
                 .load(news.getBgImageUrl())
-                .error(R.drawable.default_background)
+                .error(R.color.first_color)
                 .into((ImageView) view);
     }
 

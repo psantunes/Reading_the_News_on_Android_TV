@@ -93,7 +93,7 @@ public class FavoriteFragment extends BrowseSupportFragment {
             view.setFocusable(true);
             view.setFocusableInTouchMode(true);
             view.setBackgroundColor(
-                    ContextCompat.getColor(getContext(), R.color.fastlane_background));
+                    ContextCompat.getColor(getContext(), R.color.second_color));
             view.setTextColor(Color.WHITE);
             view.setGravity(Gravity.CENTER);
             return new ViewHolder(view);
