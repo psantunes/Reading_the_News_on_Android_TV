@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 
@@ -79,6 +80,7 @@ public class NewsActivity extends FragmentActivity {
             bindingV.setNews(selectedNews);
             bindingV.setImageUrl(selectedNews.getBgImageUrl());
             bindingV.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
+            bindingV.setIsKyosk(true);
             view = bindingV.getRoot();
         } else {
             Log.d(TAG, "Layout with horizontal picture");
@@ -94,6 +96,7 @@ public class NewsActivity extends FragmentActivity {
 
         if (mode == Mode.kyosk) {
             counter();
+            changeBackTvButton();
         }
     }
 
@@ -272,5 +275,18 @@ public class NewsActivity extends FragmentActivity {
                 startActivity(nextIntent);
             }
         }, delay);
+    }
+
+    public void changeBackTvButton() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 }

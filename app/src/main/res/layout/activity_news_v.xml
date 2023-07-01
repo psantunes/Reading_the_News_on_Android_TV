@@ -8,6 +8,7 @@
         <variable name="news" type="test.readingthenewsonandroidtv.model.News"/>
         <variable name="imageUrl" type="String"/>
         <variable name="credits" type="String"/>
+        <variable name="isKyosk" type="Boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,8 +181,9 @@
             android:drawablePadding="12dp"
             android:textDirection="locale"
             android:textAlignment="viewStart"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_end" />
+            app:layout_constraintEnd_toStartOf="@+id/button2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

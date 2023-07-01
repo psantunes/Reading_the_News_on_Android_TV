@@ -165,9 +165,9 @@
             android:drawableStart="@drawable/ic_baseline_stop_24"
             android:drawablePadding="12dp"
             android:textDirection="locale"
-            android:textAlignment="viewStart"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_end" />
+            app:layout_constraintEnd_toStartOf="@+id/button2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
