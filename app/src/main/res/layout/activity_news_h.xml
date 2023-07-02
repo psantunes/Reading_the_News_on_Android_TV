@@ -34,14 +34,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".02" />
+            app:layout_constraintGuide_percent=".05" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".98 " />
+            app:layout_constraintGuide_percent=".95" />
 
         <ImageView
             android:id="@+id/photo"
@@ -105,7 +105,7 @@
             android:id="@+id/button1"
             style="?attr/detailsActionButtonStyle"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:drawableStart="@drawable/ic_baseline_home_24"
             android:drawablePadding="12dp"
             android:textDirection="locale"
@@ -155,19 +155,6 @@
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
             app:layout_constraintStart_toEndOf="@+id/button3" />
-
-        <Button
-            android:id="@+id/button5"
-            style="?attr/detailsActionButtonStyle"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:text="@string/stop"
-            android:drawableStart="@drawable/ic_baseline_stop_24"
-            android:drawablePadding="12dp"
-            android:textDirection="locale"
-            app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
-            app:layout_constraintEnd_toStartOf="@+id/button2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -36,7 +36,6 @@ public class NewsActivity extends FragmentActivity {
 
     private List<News> list;
     private News selectedNews;
-    private Boolean isFavorite;
     private int newsNumber;
     private int nextNews;
     private int source;
@@ -46,7 +45,7 @@ public class NewsActivity extends FragmentActivity {
     private Button button2;
     private Button button3;
     private Button button4;
-    private Button button5;
+    private View menu;
     private Timer timer;
 
     @Override
@@ -74,13 +73,17 @@ public class NewsActivity extends FragmentActivity {
         }
         selectedNews = list.get(newsNumber);
 
+        if (mode == Mode.kyosk) {
+            counter();
+            changeBackTvButton();
+        }
+
         if (selectedNews.getOrientation().equals("vertical")) {
             Log.d(TAG, "Layout with vertical picture");
             ActivityNewsVBinding bindingV = DataBindingUtil.setContentView(this, R.layout.activity_news_v);
             bindingV.setNews(selectedNews);
             bindingV.setImageUrl(selectedNews.getBgImageUrl());
             bindingV.setCredits("Fonte: " + selectedNews.getSource() + "\nFoto: " + selectedNews.getPhotoCredit());
-            bindingV.setIsKyosk(true);
             view = bindingV.getRoot();
         } else {
             Log.d(TAG, "Layout with horizontal picture");
@@ -93,11 +96,6 @@ public class NewsActivity extends FragmentActivity {
 
         verifyModeAndLoadNavigationButtons();
         setContentView(view);
-
-        if (mode == Mode.kyosk) {
-            counter();
-            changeBackTvButton();
-        }
     }
 
     // call NewsList. thread is used to delay application until list is load
@@ -159,13 +157,12 @@ public class NewsActivity extends FragmentActivity {
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
         button4 = findViewById(R.id.button4);
-        button5 = findViewById(R.id.button5);
+        menu = findViewById(R.id.menu);
 
         if (mode == Mode.navigation) {
             if (source == 1) {
                 button2.setText(getString(R.string.remove_favorite));
             }
-            button5.setVisibility(View.GONE);
             navButtons();
         } else {
             button1.setVisibility(View.GONE);
@@ -173,7 +170,7 @@ public class NewsActivity extends FragmentActivity {
             button2.setVisibility(View.GONE);
             button3.setVisibility(View.GONE);
             button4.setVisibility(View.GONE);
-            kyoskButton();
+            menu.setVisibility(View.GONE);
         }
     }
 
@@ -249,15 +246,6 @@ public class NewsActivity extends FragmentActivity {
         }
     }
 
-    public void kyoskButton() {
-        // Button 1 - previous
-        button5.setOnClickListener(v -> {
-            timer.cancel();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        });
-    }
-
     public void counter() {
         Log.d(TAG, "start the 12 seconds counter");
         int delay = 12000;
@@ -277,11 +265,12 @@ public class NewsActivity extends FragmentActivity {
         }, delay);
     }
 
+    // Change the behavior of OnBackPressedCallback when in kyosk mode
     public void changeBackTvButton() {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button event
+                timer.cancel();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
