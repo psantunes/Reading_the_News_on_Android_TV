@@ -56,7 +56,6 @@ public class FavoriteRepository {
         return lines;
     }
 
-
     @SuppressLint("Range")
     public List<News> getAll(){
         List<News> newsList = new ArrayList<>();
@@ -94,5 +93,14 @@ public class FavoriteRepository {
             Log.i("Exception", e.getMessage());
             return null;
         }
+    }
+
+    public boolean checkIfIsFavorite(int id){
+        Cursor cursor =  database.getConnection().rawQuery("SELECT 1 FROM FAVORITES WHERE ID = " + id, null);
+        boolean isFavorite = (cursor.getCount() > 0);
+        cursor.close();
+        database.close();
+
+        return isFavorite;
     }
 }

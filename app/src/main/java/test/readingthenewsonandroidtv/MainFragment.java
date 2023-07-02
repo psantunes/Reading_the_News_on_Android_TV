@@ -82,7 +82,7 @@ public class MainFragment extends GuidedStepSupportFragment {
                 break;
             case 4:
                 Log.w(TAG, "Option selected: " + getString(R.string.logout));
-                getActivity().finishAndRemoveTask();
+                getActivity().finishAffinity();
                 break;
         }
     }

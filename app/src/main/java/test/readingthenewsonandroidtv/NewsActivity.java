@@ -6,16 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.Timer;
@@ -36,16 +32,15 @@ public class NewsActivity extends FragmentActivity {
 
     private List<News> list;
     private News selectedNews;
+    private boolean isFavorite;
     private int newsNumber;
     private int nextNews;
     private int source;
     private Mode mode;
-    private View view;
     private Button button1;
     private Button button2;
     private Button button3;
     private Button button4;
-    private View menu;
     private Timer timer;
 
     @Override
@@ -53,6 +48,7 @@ public class NewsActivity extends FragmentActivity {
         Log.d(TAG, "method onCreate");
         super.onCreate(savedInstanceState);
 
+        View view;
         source = (int) getIntent().getSerializableExtra(NewsActivity.SOURCE);
         mode = (Mode) getIntent().getSerializableExtra(NewsActivity.MODE);
         Log.d(TAG, "Mode = " + mode.toString());
@@ -61,6 +57,9 @@ public class NewsActivity extends FragmentActivity {
             Log.d(TAG, "Loading data from JSON file");
             loadNewsFromServer();
             newsNumber = (int) getIntent().getSerializableExtra(NewsActivity.NEWS);
+            selectedNews = list.get(newsNumber);
+            FavoriteRepository favoriteRepository = new FavoriteRepository(this);
+            isFavorite = favoriteRepository.checkIfIsFavorite(selectedNews.getId());
         } else {
             Log.d(TAG, "Loading data from SQLite");
             loadNewsFromDatabase();
@@ -69,9 +68,9 @@ public class NewsActivity extends FragmentActivity {
                 if (list.get(i).getId() == newsId) {
                     newsNumber = i;
                 }
+            selectedNews = list.get(newsNumber);
             }
         }
-        selectedNews = list.get(newsNumber);
 
         if (mode == Mode.kyosk) {
             counter();
@@ -124,14 +123,6 @@ public class NewsActivity extends FragmentActivity {
         }
     }
 
-    private void initializeBackground(News news) {
-        Glide.with(this)
-                .asBitmap()
-                .load(news.getBgImageUrl())
-                .error(R.color.first_color)
-                .into((ImageView) view);
-    }
-
     private boolean checkIfItLast() {
         Log.d(TAG, "method checkIfItLast");
         int pos = 0;
@@ -157,10 +148,10 @@ public class NewsActivity extends FragmentActivity {
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
         button4 = findViewById(R.id.button4);
-        menu = findViewById(R.id.menu);
+        View menu = findViewById(R.id.menu);
 
         if (mode == Mode.navigation) {
-            if (source == 1) {
+            if (source == 1 || isFavorite) {
                 button2.setText(getString(R.string.remove_favorite));
             }
             navButtons();
