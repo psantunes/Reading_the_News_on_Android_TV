@@ -13,12 +13,12 @@
         android:required="true" />
 
     <application
-        android:usesCleartextTraffic="true"
-        android:allowBackup="true"
         android:banner="@drawable/app_logo"
         android:icon="@mipmap/newspaper"
         android:logo="@mipmap/newspaper"
         android:label="Reading The News On Android TV"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadingTheNewsOnAndroidTV">
         <activity
